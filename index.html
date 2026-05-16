@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Okrana — Private AI for Medical &amp; Legal Practices</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080c10;--bg2:#0d1117;--bg3:#111820;
+  --surface:#141c24;--surface2:#1a2430;
+  --border:#1e2d3d;--border2:#2a3d52;
+  --g:#00d97e;--g2:#00b368;
+  --g-dim:rgba(0,217,126,0.1);--g-glow:rgba(0,217,126,0.25);
+  --text:#e8edf2;--text2:#8da0b3;--text3:#4a6070;
+  --red:#ff4757;--amber:#ffa502;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 2.5rem;height:64px;background:rgba(8,12,16,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border)}
+.nav-logo{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;color:var(--text);text-decoration:none;letter-spacing:-.02em}
+.nav-logo span{color:var(--g)}
+.nav-links{display:flex;gap:2rem;list-style:none;align-items:center}
+.nav-links a{font-size:.82rem;color:var(--text2);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--g)}
+.nav-cta{background:var(--g)!important;color:#000!important;padding:.45rem 1.25rem;border-radius:6px;font-weight:600!important;font-size:.8rem!important}
+.nav-cta:hover{opacity:.85!important}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:7rem 2.5rem 4rem;position:relative;overflow:hidden}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:60px 60px;opacity:.25;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 20%,transparent 100%)}
+.hero-glow{position:absolute;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(0,217,126,.05) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-60%);pointer-events:none}
+
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--g-dim);border:1px solid rgba(0,217,126,.25);color:var(--g);font-family:'JetBrains Mono',monospace;font-size:.68rem;padding:.35rem .85rem;border-radius:20px;margin-bottom:1.75rem;width:fit-content}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(1.5)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+@keyframes blink{50%{opacity:0}}
+
+.hero-title{font-family:'Syne',sans-serif;font-size:clamp(2.8rem,6vw,5.5rem);font-weight:800;line-height:1.05;letter-spacing:-.03em;max-width:900px;margin-bottom:1.5rem;animation:fadeUp .7s ease .1s both}
+.hero-title .accent{color:var(--g)}
+.hero-title .dim{color:var(--text2)}
+.hero-sub{font-size:1.05rem;color:var(--text2);max-width:540px;line-height:1.8;margin-bottom:2.5rem;font-weight:300;animation:fadeUp .7s ease .2s both}
+.hero-actions{display:flex;align-items:center;gap:1.25rem;flex-wrap:wrap;animation:fadeUp .7s ease .3s both}
+
+.btn-g{background:var(--g);color:#000;padding:.8rem 2rem;font-size:.9rem;font-weight:600;border:none;border-radius:8px;cursor:pointer;text-decoration:none;transition:transform .15s,box-shadow .15s;display:inline-flex;align-items:center;gap:.5rem}
+.btn-g:hover{transform:translateY(-2px);box-shadow:0 8px 30px var(--g-glow)}
+.btn-outline{background:transparent;color:var(--text);padding:.8rem 2rem;font-size:.9rem;font-weight:500;border:1px solid var(--border2);border-radius:8px;cursor:pointer;text-decoration:none;transition:border-color .2s,color .2s;display:inline-block}
+.btn-outline:hover{border-color:var(--g);color:var(--g)}
+
+.alarm-bar{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:3rem 2.5rem;position:relative;z-index:1}
+.alarm-inner{max-width:1100px;margin:0 auto}
+.alarm-label{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.15em;color:var(--g);text-transform:uppercase;margin-bottom:1.5rem}
+.alarm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--border)}
+.alarm-card{background:var(--bg2);padding:1.75rem 1.5rem}
+.alarm-num{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;line-height:1;margin-bottom:.4rem}
+.alarm-num.red{color:var(--red)}
+.alarm-num.amber{color:var(--amber)}
+.alarm-num.green{color:var(--g)}
+.alarm-desc{font-size:.8rem;color:var(--text2);line-height:1.5}
+.alarm-source{font-family:'JetBrains Mono',monospace;font-size:.6rem;color:var(--text3);margin-top:.5rem}
+
+section{padding:5rem 2.5rem;position:relative;z-index:1}
+.section-inner{max-width:1100px;margin:0 auto}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:var(--g);margin-bottom:.75rem}
+.section-title{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,3.5vw,3rem);font-weight:700;line-height:1.1;letter-spacing:-.02em;margin-bottom:1.25rem}
+.section-sub{font-size:1rem;color:var(--text2);line-height:1.8;max-width:540px}
+
+.arch-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.arch-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;margin-top:3rem}
+.arch-card{border:1px solid var(--border);border-radius:12px;padding:2rem;background:var(--bg)}
+.arch-card.bad{border-color:rgba(255,71,87,.2)}
+.arch-card.good{border-color:rgba(0,217,126,.25);background:rgba(0,217,126,.015)}
+.arch-head{display:flex;align-items:center;gap:.75rem;margin-bottom:1.5rem}
+.arch-icon{width:36px;height:36px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1rem}
+.arch-icon.red-i{background:rgba(255,71,87,.1);color:var(--red)}
+.arch-icon.green-i{background:var(--g-dim);color:var(--g)}
+.arch-title-bad{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--red)}
+.arch-title-good{font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;color:var(--g)}
+.arch-flow{display:flex;flex-direction:column;gap:.5rem}
+.flow-step{display:flex;align-items:center;gap:.75rem;font-size:.82rem;color:var(--text2);padding:.6rem .85rem;border-radius:6px;background:var(--surface)}
+.flow-step.danger{background:rgba(255,71,87,.06);color:#ff8b94;border:1px solid rgba(255,71,87,.15)}
+.flow-step.safe{background:rgba(0,217,126,.05);color:#5effa8;border:1px solid rgba(0,217,126,.15)}
+.flow-arrow{width:1px;height:16px;background:var(--border2);margin-left:1.25rem}
+
+.demo-section{background:var(--bg)}
+.demo-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3rem}
+.demo-tabs{display:flex;border-bottom:1px solid var(--border);margin-bottom:1.5rem}
+.demo-tab{padding:.6rem 1.25rem;font-size:.82rem;color:var(--text2);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;font-family:'Inter',sans-serif;margin-bottom:-1px;transition:color .2s,border-color .2s}
+.demo-tab.active{color:var(--g);border-bottom-color:var(--g);font-weight:500}
+.demo-chat{background:var(--bg2);border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.chat-header{background:var(--surface);padding:.85rem 1.25rem;display:flex;align-items:center;gap:.75rem;border-bottom:1px solid var(--border)}
+.chat-dot{width:8px;height:8px;border-radius:50%;background:var(--g);box-shadow:0 0 6px var(--g)}
+.chat-name{font-family:'JetBrains Mono',monospace;font-size:.75rem;color:var(--text2)}
+.chat-badge{font-size:.6rem;background:var(--g-dim);color:var(--g);border:1px solid rgba(0,217,126,.2);padding:.15rem .5rem;border-radius:10px;font-family:'JetBrains Mono',monospace;margin-left:auto}
+.chat-messages{padding:1.25rem;display:flex;flex-direction:column;gap:.85rem;min-height:320px;max-height:420px;overflow-y:auto}
+.msg{display:flex;gap:.75rem}
+.msg.user{flex-direction:row-reverse}
+.msg-avatar{width:28px;height:28px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;margin-top:2px}
+.msg-avatar.ai-av{background:var(--g-dim);color:var(--g);border:1px solid rgba(0,217,126,.2)}
+.msg-avatar.user-av{background:var(--surface2);color:var(--text2)}
+.msg-bubble{padding:.65rem .95rem;border-radius:8px;font-size:.82rem;line-height:1.65;max-width:88%}
+.msg-bubble.ai-bub{background:var(--surface);color:var(--text);border:1px solid var(--border)}
+.msg-bubble.user-bub{background:var(--surface2);color:var(--text2)}
+.msg-bubble .hi{color:var(--g);font-weight:500}
+.cursor{display:inline-block;width:2px;height:.9em;background:var(--g);vertical-align:text-bottom;animation:blink .7s step-end infinite}
+.chat-input-row{padding:.85rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.75rem}
+.chat-input{flex:1;background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.6rem .85rem;font-size:.82rem;color:var(--text);font-family:'Inter',sans-serif;outline:none}
+.chat-input:focus{border-color:var(--g)}
+.chat-send{background:var(--g);color:#000;border:none;border-radius:6px;padding:.6rem 1rem;font-size:.8rem;font-weight:600;cursor:pointer}
+.chat-send:hover{opacity:.85}
+
+.demo-point{display:flex;align-items:flex-start;gap:.85rem;padding:.85rem 0;border-bottom:1px solid var(--border)}
+.demo-point:last-child{border-bottom:none}
+.demo-icon{width:32px;height:32px;border-radius:6px;background:var(--g-dim);border:1px solid rgba(0,217,126,.2);display:flex;align-items:center;justify-content:center;color:var(--g);flex-shrink:0;font-size:.9rem;margin-top:2px}
+.demo-point-title{font-weight:500;font-size:.88rem;margin-bottom:.2rem}
+.demo-point-body{font-size:.8rem;color:var(--text2);line-height:1.6}
+
+.calc-section{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border)}
+.calc-wrap{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;margin-top:3rem}
+.calc-form{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:2rem}
+.calc-field{margin-bottom:1.5rem}
+.calc-label{display:flex;justify-content:space-between;align-items:center;font-size:.8rem;color:var(--text2);margin-bottom:.6rem}
+.calc-val{font-family:'JetBrains Mono',monospace;font-size:.82rem;color:var(--g);font-weight:500}
+input[type=range]{width:100%;accent-color:var(--g);cursor:pointer}
+.calc-select{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:.6rem .85rem;border-radius:6px;font-size:.82rem;font-family:'Inter',sans-serif;outline:none;cursor:pointer}
+.calc-select:focus{border-color:var(--g)}
+.calc-results{background:var(--bg);border:1px solid var(--border2);border-radius:12px;padding:2rem;position:sticky;top:80px}
+.result-big{font-family:'Syne',sans-serif;font-size:3.5rem;font-weight:800;color:var(--g);line-height:1;margin:1rem 0 .4rem}
+.result-label{font-size:.8rem;color:var(--text2)}
+.result-divider{border:none;border-top:1px solid var(--border);margin:1.5rem 0}
+.result-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;font-size:.82rem;border-bottom:1px solid var(--border)}
+.result-row:last-of-type{border-bottom:none}
+.r-label{color:var(--text2)}
+.r-val{font-family:'JetBrains Mono',monospace;font-weight:500}
+.r-val.green{color:var(--g)}
+.r-val.red{color:var(--red)}
+.result-note{font-size:.7rem;color:var(--text3);margin-top:1.25rem;line-height:1.7;font-family:'JetBrains Mono',monospace}
+
+.compare-section{background:var(--bg)}
+.compare-table{width:100%;border-collapse:collapse;font-size:.82rem;margin-top:3rem}
+.compare-table th{padding:1rem 1.25rem;text-align:left;font-weight:600;border-bottom:1px solid var(--border);font-size:.72rem;text-transform:uppercase;letter-spacing:.05em;color:var(--text2)}
+.compare-table th.ok-col{color:var(--g);background:rgba(0,217,126,.03);border-top:2px solid var(--g)}
+.compare-table td{padding:.9rem 1.25rem;border-bottom:1px solid var(--border);color:var(--text2)}
+.compare-table td.feat{color:var(--text);font-weight:500}
+.compare-table td.ok-col{background:rgba(0,217,126,.02)}
+.compare-table tr:hover td{background:var(--surface)}
+.compare-table tr:hover td.ok-col{background:rgba(0,217,126,.04)}
+.ck{color:var(--g)}.cx{color:var(--red)}.cp{color:var(--amber);font-size:.78rem}
+
+.pricing-section{background:var(--bg2);border-top:1px solid var(--border)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.price-card{background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:2rem;position:relative;transition:border-color .2s,transform .2s}
+.price-card:hover{transform:translateY(-3px);border-color:var(--border2)}
+.price-card.featured{border-color:rgba(0,217,126,.4);background:rgba(0,217,126,.015)}
+.price-popular{position:absolute;top:-12px;right:1.5rem;background:var(--g);color:#000;font-size:.62rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:.3rem .75rem;border-radius:10px}
+.price-tier{font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--text3);margin-bottom:.65rem}
+.price-amount{font-family:'Syne',sans-serif;font-size:2.8rem;font-weight:800;color:var(--text);line-height:1;margin-bottom:.2rem}
+.price-period{font-size:.75rem;color:var(--text3);margin-bottom:1.75rem}
+.price-features{list-style:none;margin-bottom:2rem}
+.price-features li{font-size:.8rem;color:var(--text2);padding:.45rem 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:.6rem}
+.price-features li::before{content:'→';color:var(--g);font-size:.75rem;flex-shrink:0}
+.price-btn{display:block;width:100%;padding:.8rem;text-align:center;font-size:.85rem;font-weight:600;border:1px solid var(--border2);background:transparent;color:var(--text);border-radius:8px;cursor:pointer;text-decoration:none;transition:border-color .2s,background .2s,color .2s}
+.price-btn:hover{border-color:var(--g);background:var(--g);color:#000}
+.price-btn.feat-btn{background:var(--g);color:#000;border-color:var(--g)}
+.price-btn.feat-btn:hover{opacity:.85}
+
+.final-cta{background:var(--bg);border-top:1px solid var(--border);text-align:center;padding:7rem 2.5rem}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:1.75rem 2.5rem;display:flex;justify-content:space-between;align-items:center;font-size:.78rem;color:var(--text3)}
+footer a{color:var(--text3);text-decoration:none;transition:color .2s}
+footer a:hover{color:var(--g)}
+.footer-links{display:flex;gap:1.5rem}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  nav{padding:0 1.25rem}.nav-links{display:none}
+  section,.hero{padding:3.5rem 1.25rem}.hero{padding-top:6rem}
+  .alarm-grid,.arch-grid,.demo-wrap,.calc-wrap,.pricing-grid{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:.75rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">okrana<span>.</span></a>
+  <ul class="nav-links">
+    <li><a href="#how-it-works">How it works</a></li>
+    <li><a href="#demo">Live demo</a></li>
+    <li><a href="#roi">ROI calculator</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#contact" class="nav-cta">Get a demo</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+  <div style="position:relative;z-index:1;max-width:1100px;margin:0 auto;width:100%">
+    <div class="badge"><span class="badge-dot"></span>HIPAA BAA · Private Cloud · Zero PHI exposure</div>
+    <h1 class="hero-title">The AI your practice<br><span class="accent">can actually use</span><br><span class="dim">with patient data.</span></h1>
+    <p class="hero-sub">ChatGPT and Copilot aren't HIPAA-compliant. Okrana is — with a signed BAA on every plan, a private AI instance that never trains on your data, and setup in 48 hours.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-g">Request a free demo →</a>
+      <a href="#roi" class="btn-outline">Calculate your ROI</a>
+    </div>
+  </div>
+</section>
+
+<div class="alarm-bar">
+  <div class="alarm-inner">
+    <div class="alarm-label">// The cost of doing nothing</div>
+    <div class="alarm-grid">
+      <div class="alarm-card reveal"><div class="alarm-num red" data-count="276" data-suffix="M">0</div><div class="alarm-desc">Americans had PHI exposed in 2024 — nearly the entire country</div><div class="alarm-source">HHS OCR · IBM Data Breach Report 2025</div></div>
+      <div class="alarm-card reveal"><div class="alarm-num amber" data-count="57" data-suffix="%">0</div><div class="alarm-desc">Of healthcare workers already use unauthorized AI tools with patient data</div><div class="alarm-source">Netskope Threat Labs 2025</div></div>
+      <div class="alarm-card reveal"><div class="alarm-num red" data-count="9.8" data-suffix="M">$</div><div class="alarm-desc">Average cost of a healthcare data breach — highest of any industry</div><div class="alarm-source">IBM Cost of a Data Breach 2025</div></div>
+      <div class="alarm-card reveal"><div class="alarm-num green" data-count="35" data-suffix="x">0</div><div class="alarm-desc">Faster than manual workflows for staff using a properly configured AI assistant</div><div class="alarm-source">Hathr.AI benchmarks · Okrana client data 2025</div></div>
+    </div>
+  </div>
+</div>
+
+<section class="arch-section" id="how-it-works">
+  <div class="section-inner">
+    <div class="eyebrow">// Architecture</div>
+    <h2 class="section-title reveal">Why ChatGPT can't sign your BAA —<br>and why that matters today.</h2>
+    <p class="section-sub reveal">Your staff is already using AI with patient data. The question is whether they're doing it compliantly — or creating a six-figure liability every week.</p>
+    <div class="arch-grid">
+      <div class="arch-card bad reveal">
+        <div class="arch-head"><div class="arch-icon red-i">✗</div><div class="arch-title-bad">ChatGPT / Copilot / Gemini</div></div>
+        <div class="arch-flow">
+          <div class="flow-step">👩‍⚕️ Staff types patient note into chat</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step danger">☁️ Data sent to OpenAI / Microsoft servers</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step danger">🔗 Sub-processors receive your PHI</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step danger">🤖 Potentially used in model training</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step danger">⚠️ No enforceable BAA → HIPAA violation</div>
+        </div>
+      </div>
+      <div class="arch-card good reveal">
+        <div class="arch-head"><div class="arch-icon green-i">✓</div><div class="arch-title-good">Okrana</div></div>
+        <div class="arch-flow">
+          <div class="flow-step">👩‍⚕️ Staff types patient note into Okrana</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step safe">🔒 Encrypted — stays in your private instance</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step safe">🏛️ Processed on dedicated infrastructure</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step safe">🚫 Zero model training on your data. Ever.</div>
+          <div class="flow-arrow"></div>
+          <div class="flow-step safe">✅ Signed BAA — HIPAA compliant by design</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section" id="demo">
+  <div class="section-inner">
+    <div class="eyebrow">// Live demo</div>
+    <h2 class="section-title reveal">See what Okrana actually does.</h2>
+    <div class="demo-wrap">
+      <div>
+        <div class="demo-tabs">
+          <button class="demo-tab active" onclick="setDemo('medical',this)">Medical practice</button>
+          <button class="demo-tab" onclick="setDemo('legal',this)">Law firm</button>
+        </div>
+        <div class="demo-chat">
+          <div class="chat-header">
+            <div class="chat-dot"></div>
+            <span class="chat-name">okrana assistant</span>
+            <span class="chat-badge">🔒 PHI Protected · Under BAA</span>
+          </div>
+          <div class="chat-messages" id="chat-messages"></div>
+          <div class="chat-input-row">
+            <input class="chat-input" id="chat-input" placeholder="Ask Okrana anything…" onkeydown="if(event.key==='Enter')sendMsg()"/>
+            <button class="chat-send" onclick="sendMsg()">Send</button>
+          </div>
+        </div>
+      </div>
+      <div style="padding-top:3.5rem">
+        <div class="demo-point reveal"><div class="demo-icon">⚡</div><div><div class="demo-point-title">Instant clinical notes</div><div class="demo-point-body">Draft a full SOAP note from a 2-sentence summary. 8 minutes → 12 seconds.</div></div></div>
+        <div class="demo-point reveal"><div class="demo-icon">📋</div><div><div class="demo-point-title">Your formats, not ours</div><div class="demo-point-body">Pre-configured to your note structure, referral templates, and intake forms.</div></div></div>
+        <div class="demo-point reveal"><div class="demo-icon">🔐</div><div><div class="demo-point-title">Zero data retention</div><div class="demo-point-body">Nothing you type is stored after the session. No logs. No training. No exposure.</div></div></div>
+        <div class="demo-point reveal"><div class="demo-icon">🏛️</div><div><div class="demo-point-title">BAA signed at onboarding</div><div class="demo-point-body">Not a premium feature. Every plan includes a signed BAA before you go live.</div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="calc-section" id="roi">
+  <div class="section-inner">
+    <div class="eyebrow">// ROI calculator</div>
+    <h2 class="section-title reveal">Calculate what you're actually spending.</h2>
+    <p class="section-sub reveal">Most practices pay $4–8k/month for manual work Okrana handles in seconds. Run your numbers.</p>
+    <div class="calc-wrap">
+      <div class="calc-form reveal">
+        <div class="calc-field">
+          <label class="calc-label">Number of providers / attorneys<span class="calc-val" id="pv">3</span></label>
+          <input type="range" min="1" max="20" value="3" step="1" id="providers" oninput="calcROI()"/>
+        </div>
+        <div class="calc-field">
+          <label class="calc-label">Hours/day on documentation<span class="calc-val" id="hv">2.5 hrs</span></label>
+          <input type="range" min="0.5" max="6" step="0.5" value="2.5" id="hours" oninput="calcROI()"/>
+        </div>
+        <div class="calc-field">
+          <label class="calc-label">Staff billing rate ($/hr)<span class="calc-val" id="rv">$65</span></label>
+          <input type="range" min="20" max="200" step="5" value="65" id="rate" oninput="calcROI()"/>
+        </div>
+        <div class="calc-field">
+          <label class="calc-label">AI time reduction estimate<span class="calc-val" id="rdv">70%</span></label>
+          <input type="range" min="40" max="85" step="5" value="70" id="reduction" oninput="calcROI()"/>
+        </div>
+      </div>
+      <div class="calc-results reveal">
+        <div class="eyebrow">Your estimated savings</div>
+        <div class="result-big" id="r-big">$0</div>
+        <div class="result-label">per month saved on documentation labor</div>
+        <hr class="result-divider"/>
+        <div class="result-row"><span class="r-label">Current monthly doc cost</span><span class="r-val red" id="r-curr">$0</span></div>
+        <div class="result-row"><span class="r-label">With Okrana (labor + plan)</span><span class="r-val" id="r-with">$0</span></div>
+        <div class="result-row"><span class="r-label">Monthly savings</span><span class="r-val green" id="r-save">$0</span></div>
+        <div class="result-row"><span class="r-label">Annual savings</span><span class="r-val green" id="r-annual">$0</span></div>
+        <div class="result-row"><span class="r-label">Setup payback period</span><span class="r-val green" id="r-payback">—</span></div>
+        <div class="result-note">// Estimates based on 22 working days/month. Actual results vary. <a href="#contact" style="color:var(--g)">Get a custom analysis →</a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="compare-section" id="compare">
+  <div class="section-inner">
+    <div class="eyebrow">// Comparison</div>
+    <h2 class="section-title reveal">Okrana vs. the alternatives.</h2>
+    <p class="section-sub reveal">How Okrana stacks up against generic AI and enterprise competitors.</p>
+    <div style="overflow-x:auto">
+    <table class="compare-table">
+      <thead><tr>
+        <th style="width:30%">Feature</th>
+        <th class="ok-col">Okrana</th>
+        <th>ChatGPT / Copilot</th>
+        <th>Hathr / BastionGPT</th>
+        <th>Nuance DAX</th>
+      </tr></thead>
+      <tbody>
+        <tr><td class="feat">Signed BAA included</td><td class="ok-col"><span class="ck">✓</span> All plans</td><td><span class="cx">✗</span> Not available</td><td><span class="ck">✓</span> All plans</td><td><span class="ck">✓</span> Enterprise only</td></tr>
+        <tr><td class="feat">Private isolated instance</td><td class="ok-col"><span class="ck">✓</span></td><td><span class="cx">✗</span> Shared</td><td><span class="cp">⚠ Shared cloud</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td class="feat">On-premise option</td><td class="ok-col"><span class="ck">✓</span> Available</td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td><td><span class="cx">✗</span></td></tr>
+        <tr><td class="feat">Custom workflow config</td><td class="ok-col"><span class="ck">✓</span> Included</td><td><span class="cx">✗</span></td><td><span class="cp">⚠ Extra cost</span></td><td><span class="ck">✓</span></td></tr>
+        <tr><td class="feat">Medical + legal both served</td><td class="ok-col"><span class="ck">✓</span></td><td><span class="ck">✓</span></td><td><span class="cp">⚠ Medical focus</span></td><td><span class="cx">✗</span> Medical only</td></tr>
+        <tr><td class="feat">Setup &lt; 1 week</td><td class="ok-col"><span class="ck">✓</span> 48 hrs</td><td><span class="ck">✓</span></td><td><span class="cp">⚠ Days–weeks</span></td><td><span class="cx">✗</span> Months</td></tr>
+        <tr><td class="feat">Direct human support</td><td class="ok-col"><span class="ck">✓</span> Same-day</td><td><span class="cx">✗</span></td><td><span class="cp">⚠ Ticketing</span></td><td><span class="cx">✗</span> Enterprise queue</td></tr>
+        <tr><td class="feat">Starting price / month</td><td class="ok-col" style="color:var(--g);font-weight:600">$750 flat</td><td>$20–30/user</td><td>$99–499/user</td><td>~$600+/user</td></tr>
+        <tr><td class="feat">Small practice ready</td><td class="ok-col"><span class="ck">✓</span></td><td><span class="cp">⚠ Not HIPAA</span></td><td><span class="cp">⚠ Can be</span></td><td><span class="cx">✗</span> Enterprise only</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </div>
+</section>
+
+<section class="pricing-section" id="pricing">
+  <div class="section-inner">
+    <div class="eyebrow">// Pricing</div>
+    <h2 class="section-title reveal">Simple. Flat. BAA at every tier.</h2>
+    <p class="section-sub reveal">No per-seat chaos. No usage surprises. A number you can put in your budget.</p>
+    <div class="pricing-grid">
+      <div class="price-card reveal">
+        <div class="price-tier">// Solo / Small</div>
+        <div class="price-amount">$750</div>
+        <div class="price-period">per month + $1,500 setup</div>
+        <ul class="price-features">
+          <li>Signed BAA — Day 1</li><li>Private AI instance</li><li>Up to 3 staff users</li>
+          <li>2 workflow configurations</li><li>Email + phone support</li><li>2hr staff training</li>
+        </ul>
+        <a href="#contact" class="price-btn">Get started</a>
+      </div>
+      <div class="price-card featured reveal">
+        <div class="price-popular">Most popular</div>
+        <div class="price-tier">// Growing Practice</div>
+        <div class="price-amount">$1,500</div>
+        <div class="price-period">per month + $2,500 setup</div>
+        <ul class="price-features">
+          <li>Signed BAA — Day 1</li><li>Private AI instance</li><li>Up to 12 staff users</li>
+          <li>5 workflow configurations</li><li>Priority same-day support</li>
+          <li>4hr staff training</li><li>Quarterly workflow reviews</li>
+        </ul>
+        <a href="#contact" class="price-btn feat-btn">Get started</a>
+      </div>
+      <div class="price-card reveal">
+        <div class="price-tier">// Multi-location</div>
+        <div class="price-amount">Custom</div>
+        <div class="price-period">tailored to your scale</div>
+        <ul class="price-features">
+          <li>Signed BAA — Day 1</li><li>Dedicated infrastructure</li><li>Unlimited users</li>
+          <li>Full workflow build-out</li><li>On-site training option</li>
+          <li>SLA guarantee</li><li>EHR / CMS integration</li>
+        </ul>
+        <a href="#contact" class="price-btn">Let's talk</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="final-cta" id="contact">
+  <div style="max-width:600px;margin:0 auto">
+    <div class="eyebrow" style="justify-content:center;display:flex;margin-bottom:1rem">// Get started</div>
+    <h2 class="section-title reveal" style="text-align:center">Your staff is already<br>using AI with patient data.</h2>
+    <p style="color:var(--text2);margin:1rem auto 2.5rem;text-align:center;line-height:1.8;max-width:480px">The question is whether they're doing it compliantly. Let's fix that — in 48 hours, with a signed BAA and a system built for your practice.</p>
+    <div style="text-align:center"><a href="mailto:hello@okrana.com" class="btn-g" style="font-size:1rem;padding:1rem 2.5rem">Schedule a 30-min demo →</a></div>
+  </div>
+</section>
+
+<footer>
+  <span style="font-family:'JetBrains Mono',monospace;font-size:.72rem">okrana. — HIPAA-Compliant AI</span>
+  <div class="footer-links"><a href="#">Privacy</a><a href="#">BAA Template</a><a href="#">Security</a><a href="mailto:hello@okrana.com">Contact</a></div>
+  <span>© 2025 Okrana LLC</span>
+</footer>
+
+<script>
+// ── DEMO CHAT ───────────────────────────────────────────────────────────────
+const scripts = {
+  medical:[
+    {r:'user',t:'Draft a SOAP note: 47M, HTN follow-up, BP 138/88, on lisinopril 10mg, no new complaints.'},
+    {r:'ai',t:'<b>SOAP Note — Hypertension Follow-Up</b><br><br><span class="hi">S:</span> 47-year-old male, hypertension follow-up. No chest pain, dyspnea, headache, or visual changes. Adherent to lisinopril 10mg daily. No new complaints.<br><br><span class="hi">O:</span> BP 138/88 mmHg. HR 72 bpm, regular. No edema. Lungs clear.<br><br><span class="hi">A:</span> Essential hypertension — mildly elevated today, otherwise at goal range.<br><br><span class="hi">P:</span> Continue lisinopril 10mg. Reinforce low-sodium diet, 30 min aerobic activity 5x/week. Recheck BP in 6 weeks. BMP + lipid panel at next visit.'}
+  ],
+  legal:[
+    {r:'user',t:'Summarize deposition: witness admits skipping safety check Nov 3rd, claims no recall signing maintenance log, but his signature is on page 12.'},
+    {r:'ai',t:'<b>Deposition Summary — Key Findings</b><br><br><span class="hi">Critical admission:</span> Witness concedes the Nov 3rd safety inspection was not completed. Directly contradicts the defense position that all protocols were followed.<br><br><span class="hi">Credibility issue:</span> Witness claims no recollection of signing the maintenance log — however his signature appears on page 12. Grounds for impeachment under FRE 613.<br><br><span class="hi">Recommended next steps:</span><br>→ Subpoena badge-access records for Nov 3rd<br>→ Depose the compliance officer who countersigned<br>→ Request chain-of-custody docs for maintenance log'}
+  ]
+};
+
+let currentDemo='medical';
+
+function mkMsg(role,html){
+  const w=document.createElement('div');
+  w.className='msg '+(role==='ai'?'':'user');
+  const av=document.createElement('div');
+  av.className='msg-avatar '+(role==='ai'?'ai-av':'user-av');
+  av.textContent=role==='ai'?'OK':'YOU';
+  const bub=document.createElement('div');
+  bub.className='msg-bubble '+(role==='ai'?'ai-bub':'user-bub');
+  bub.innerHTML=html;
+  w.appendChild(av);w.appendChild(bub);
+  return {wrap:w,bub};
+}
+
+function typeAI(html,el){
+  return new Promise(res=>{
+    const {wrap,bub}=mkMsg('ai','');
+    el.appendChild(wrap);
+    el.scrollTop=el.scrollHeight;
+    const plain=html.replace(/<[^>]+>/g,'');
+    let i=0;
+    bub.innerHTML='<span class="cursor"></span>';
+    const iv=setInterval(()=>{
+      if(i>=plain.length){
+        clearInterval(iv);
+        setTimeout(()=>{bub.innerHTML=html;res();},100);
+        return;
+      }
+      bub.innerHTML=plain.slice(0,++i)+'<span class="cursor"></span>';
+      el.scrollTop=el.scrollHeight;
+    },10);
+  });
+}
+
+async function loadDemo(type){
+  const el=document.getElementById('chat-messages');
+  el.innerHTML='';
+  for(const m of scripts[type]){
+    if(m.r==='user'){
+      const {wrap}=mkMsg('user',m.t);
+      el.appendChild(wrap);
+      el.scrollTop=el.scrollHeight;
+      await new Promise(r=>setTimeout(r,400));
+    } else {
+      await typeAI(m.t,el);
+    }
+    await new Promise(r=>setTimeout(r,300));
+  }
+}
+
+function setDemo(type,btn){
+  currentDemo=type;
+  document.querySelectorAll('.demo-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  loadDemo(type);
+}
+
+const aiReplies={
+  icd:'For essential hypertension the primary code is <span class="hi">I10</span>. If documented CKD, consider <span class="hi">I12.9</span>. Always confirm with your billing team based on the full encounter.',
+  referral:'<b>Referral — Cardiology</b><br><br>Dear Dr. [Specialist],<br><br>I am referring [Patient], 47M with essential hypertension, for evaluation. BP remains mildly elevated at 138/88 despite compliance with lisinopril 10mg daily. Appreciate your input regarding further workup or management adjustment.<br><br>[Your name, NPI, practice contact]',
+  demand:'<b>Demand Letter Draft</b><br><br>Via Certified Mail<br><br>RE: Notice of Claim — Premises Liability<br><br>Dear Counsel,<br><br>This firm represents [Client] regarding injuries sustained on November 3rd. Your client\'s employee admitted to skipping the required safety inspection that day. We have documentary evidence of a forged or disputed maintenance log entry. Demand for settlement: $[amount] within 30 days.',
+  default:'Understood — <span class="hi">processing under your BAA-protected session.</span> Your data stays encrypted within your private Okrana instance, never leaves your environment, and is never used for training. Here\'s a draft based on your practice\'s templates:<br><br>[Full response generated here based on your configured workflows.]'
+};
+
+function sendMsg(){
+  const inp=document.getElementById('chat-input');
+  const val=inp.value.trim();
+  if(!val)return;
+  inp.value='';
+  const el=document.getElementById('chat-messages');
+  const {wrap}=mkMsg('user',val);
+  el.appendChild(wrap);
+  el.scrollTop=el.scrollHeight;
+  const lv=val.toLowerCase();
+  let reply=aiReplies.default;
+  if(lv.includes('icd')||lv.includes('code'))reply=aiReplies.icd;
+  else if(lv.includes('referral'))reply=aiReplies.referral;
+  else if(lv.includes('demand'))reply=aiReplies.demand;
+  setTimeout(()=>typeAI(reply,el),600);
+}
+
+// ── ROI CALC ────────────────────────────────────────────────────────────────
+function getPlan(n){return n<=3?750:n<=12?1500:2500;}
+function fmt(n){return'$'+Math.round(n).toLocaleString();}
+
+function calcROI(){
+  const p=+document.getElementById('providers').value;
+  const h=+document.getElementById('hours').value;
+  const r=+document.getElementById('rate').value;
+  const rd=+document.getElementById('reduction').value/100;
+  document.getElementById('pv').textContent=p;
+  document.getElementById('hv').textContent=h+' hrs';
+  document.getElementById('rv').textContent='$'+r;
+  document.getElementById('rdv').textContent=Math.round(rd*100)+'%';
+  const days=22;
+  const curr=p*h*r*days;
+  const plan=getPlan(p);
+  const saved=curr*rd;
+  const withOk=curr*(1-rd)+plan;
+  const mo=saved-plan;
+  const yr=mo*12;
+  const pb=mo>0?(2500/Math.max(mo,1)).toFixed(1)+' months':'—';
+  document.getElementById('r-big').textContent=mo>0?fmt(mo):'$0';
+  document.getElementById('r-curr').textContent=fmt(curr);
+  document.getElementById('r-with').textContent=fmt(withOk);
+  document.getElementById('r-save').textContent=mo>0?fmt(mo):'—';
+  document.getElementById('r-annual').textContent=yr>0?fmt(yr):'—';
+  document.getElementById('r-payback').textContent=pb;
+}
+
+// ── COUNTERS ────────────────────────────────────────────────────────────────
+function animCount(el){
+  const target=parseFloat(el.dataset.count);
+  const suf=el.dataset.suffix||'';
+  const dec=target%1!==0;
+  const dur=1800;const t0=performance.now();
+  const step=now=>{
+    const p=Math.min((now-t0)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    const v=target*e;
+    el.textContent=(suf==='$'?'$':'')+(dec?v.toFixed(1):Math.round(v))+(suf==='$'?'M':suf==='%'?'%':suf);
+    if(p<1)requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
+// ── SCROLL REVEAL ───────────────────────────────────────────────────────────
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.classList.add('visible');
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+const cobs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){animCount(e.target);cobs.unobserve(e.target);}});
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>cobs.observe(el));
+
+loadDemo('medical');
+calcROI();
+</script>
+</body>
+</html>
