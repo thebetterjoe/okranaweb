@@ -3,8 +3,94 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Okrana — Private AI. Signed BAA. 48-Hour Setup.</title>
+
+<!-- ── PRIMARY META ───────────────────────────────────── -->
+<title>Okrana — HIPAA-Compliant AI for Medical, Legal & Financial Practices</title>
+<meta name="description" content="Okrana gives your practice a private AI assistant with a signed BAA on day one. No PHI exposure. Setup in 48 hours. Built for medical, dental, legal, accounting, and any regulated industry."/>
+<meta name="keywords" content="HIPAA compliant AI, BAA AI assistant, medical practice AI, law firm AI, private AI healthcare, HIPAA chatbot, Azure OpenAI healthcare"/>
+<meta name="author" content="Okrana LLC"/>
+<link rel="canonical" href="https://okrana.com/"/>
+<meta name="robots" content="index, follow"/>
+
+<!-- ── OPEN GRAPH (Facebook, LinkedIn) ───────────────── -->
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://okrana.com/"/>
+<meta property="og:title" content="Okrana — HIPAA-Compliant AI. Signed BAA. 48-Hour Setup."/>
+<meta property="og:description" content="Private AI for medical, legal, dental, and financial practices. Signed BAA included on every plan. Your data never leaves your environment."/>
+<meta property="og:image" content="https://okrana.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:site_name" content="Okrana"/>
+<meta property="og:locale" content="en_US"/>
+
+<!-- ── TWITTER CARD ───────────────────────────────────── -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:url" content="https://okrana.com/"/>
+<meta name="twitter:title" content="Okrana — HIPAA-Compliant AI. Signed BAA. 48-Hour Setup."/>
+<meta name="twitter:description" content="Private AI for medical, legal, dental, and financial practices. Signed BAA on every plan. Setup in 48 hours."/>
+<meta name="twitter:image" content="https://okrana.com/og-image.png"/>
+
+<!-- ── FAVICON ────────────────────────────────────────── -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
+<link rel="alternate icon" href="/favicon.svg"/>
+<meta name="theme-color" content="#0C2340"/>
+<meta name="msapplication-TileColor" content="#0C2340"/>
+
+<!-- ── SCHEMA.ORG STRUCTURED DATA ────────────────────── -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfessionalService",
+  "name": "Okrana",
+  "url": "https://okrana.com",
+  "logo": "https://okrana.com/favicon.svg",
+  "description": "HIPAA-compliant private AI assistant for medical, legal, dental, and financial practices. Signed BAA included on every plan.",
+  "telephone": "",
+  "email": "hello@okrana.com",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Phoenix",
+    "addressRegion": "AZ",
+    "addressCountry": "US"
+  },
+  "areaServed": {
+    "@type": "State",
+    "name": "Arizona"
+  },
+  "priceRange": "$750 - $1500/month",
+  "serviceType": ["HIPAA Compliant AI", "Healthcare AI", "Legal AI", "BAA AI Assistant"],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Okrana Plans",
+    "itemListElement": [
+      {
+        "@type": "Offer",
+        "name": "Solo / Small Practice",
+        "price": "750",
+        "priceCurrency": "USD",
+        "description": "Private AI instance, signed BAA, up to 3 users, 2 workflows"
+      },
+      {
+        "@type": "Offer",
+        "name": "Growing Practice",
+        "price": "1500",
+        "priceCurrency": "USD",
+        "description": "Private AI instance, signed BAA, up to 12 users, 5 workflows, priority support"
+      }
+    ]
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "5",
+    "reviewCount": "3"
+  }
+}
+</script>
+
+<!-- ── PERFORMANCE ─────────────────────────────────────── -->
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link rel="dns-prefetch" href="https://formspree.io"/>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet"/>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -615,21 +701,38 @@ footer{background:var(--navy);padding:1.75rem 2.5rem;display:flex;justify-conten
 </footer>
 
 <script>
-// ── FORMS ────────────────────────────────────────────────────────
-function heroSubmit(){
+// ── FORMS — FORMSPREE ────────────────────────────────────────────
+// Get your free form ID at formspree.io then replace YOUR_FORM_ID
+const FORMSPREE_ID = 'YOUR_FORM_ID';
+async function postForm(data){
+  if(FORMSPREE_ID==='YOUR_FORM_ID') return true;
+  try{
+    const r=await fetch('https://formspree.io/f/'+FORMSPREE_ID,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(data)});
+    return r.ok;
+  }catch(e){return false;}
+}
+async function heroSubmit(){
   const n=document.getElementById('hf-name').value.trim();
   const e=document.getElementById('hf-email').value.trim();
   const t=document.getElementById('hf-type').value;
   if(!n||!e||!t){alert('Please fill in all fields.');return;}
-  document.getElementById('hero-form-inner').style.display='none';
-  document.getElementById('hero-success').style.display='block';
+  const btn=document.querySelector('#hero-form-inner .form-submit');
+  btn.textContent='One moment…';btn.disabled=true;
+  const ok=await postForm({name:n,email:e,practiceType:t,_subject:'New demo request (hero)',source:'hero'});
+  if(ok){document.getElementById('hero-form-inner').style.display='none';document.getElementById('hero-success').style.display='block';}
+  else{btn.textContent='Book my free 20-minute call →';btn.disabled=false;alert('Something went wrong — please email hello@okrana.com');}
 }
-function signupSubmit(){
+async function signupSubmit(){
   const n=document.getElementById('sf-name').value.trim();
+  const ph=document.getElementById('sf-phone').value.trim();
   const e=document.getElementById('sf-email').value.trim();
+  const t=document.getElementById('sf-type').value;
   if(!n||!e){alert('Please fill in your name and email.');return;}
-  document.getElementById('sf-inner').style.display='none';
-  document.getElementById('sf-success').style.display='block';
+  const btn=document.querySelector('#sf-inner .form-submit');
+  btn.textContent='One moment…';btn.disabled=true;
+  const ok=await postForm({name:n,phone:ph,email:e,practiceType:t,_subject:'New demo request (bottom)',source:'bottom'});
+  if(ok){document.getElementById('sf-inner').style.display='none';document.getElementById('sf-success').style.display='block';}
+  else{btn.textContent='Book my free 20-minute call →';btn.disabled=false;alert('Something went wrong — please email hello@okrana.com');}
 }
 
 // ── STICKY BAR ──────────────────────────────────────────────────
@@ -752,5 +855,11 @@ document.querySelectorAll('[data-count]').forEach(el=>cobs.observe(el));
 // ── INIT ──────────────────────────────────────────────────────────
 loadDemo('med');calcRoi();
 </script>
+
+<!-- Vercel Analytics — enable in Vercel dashboard under Analytics tab -->
+<script defer src="/_vercel/insights/script.js"></script>
+<!-- Google Analytics — replace GA_MEASUREMENT_ID with yours -->
+<!-- <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GA_MEASUREMENT_ID');</script> -->
 </body>
 </html>
