@@ -157,27 +157,64 @@ nav{
 
 /* ── PARTNERS BAR ── */
 .partners{
-  padding:2.5rem 3rem;background:var(--paper);
-  border-bottom:1px solid var(--paper-3);
-  text-align:center;
+  padding:7rem 3rem;background:linear-gradient(135deg,var(--paper) 0%,var(--paper-2) 100%);
+  border-bottom:2px solid var(--paper-3);
+  text-align:center;position:relative;overflow:hidden;
 }
-.partners-inner{max-width:1200px;margin:0 auto}
+.partners::before{
+  content:'';position:absolute;inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  opacity:.015;pointer-events:none;
+}
+.partners-inner{max-width:100%;margin:0 auto;position:relative;z-index:1}
 .partners-label{
-  font-family:var(--f-mono);font-size:10px;text-transform:uppercase;
-  letter-spacing:.1em;color:var(--ink-3);margin-bottom:1rem;
+  font-family:var(--f-display);font-size:clamp(26px,4.5vw,40px);
+  font-weight:700;letter-spacing:-0.025em;
+  color:var(--ink);margin-bottom:2.5rem;
 }
-.partners-list{
-  display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap;
+.partners-scroll{
+  position:relative;overflow:hidden;margin:2rem -3rem 0;
 }
-.partner-item{
-  font-family:var(--f-mono);font-size:.85rem;font-weight:500;
-  color:var(--ink);display:flex;align-items:center;gap:.5rem;
-  transition:color .2s;
+.partners-scroll::before,
+.partners-scroll::after{
+  content:'';position:absolute;top:0;width:12%;height:100%;z-index:10;pointer-events:none;
 }
-.partner-item:hover{color:var(--navy)}
+.partners-scroll::before{left:0;background:linear-gradient(to right,var(--paper-2),transparent)}
+.partners-scroll::after{right:0;background:linear-gradient(to left,var(--paper-2),transparent)}
+.partners-track{
+  display:flex;align-items:center;gap:2.5rem;padding:2rem 3rem;
+  animation:scroll-partners 35s linear infinite;
+}
+@keyframes scroll-partners{
+  0%{transform:translateX(0)}
+  100%{transform:translateX(-50%)}
+}
+.partners-track:hover{animation-play-state:paused}
+.partner-badge{
+  display:inline-flex;align-items:center;gap:1rem;
+  background:rgba(255,255,255,.75);backdrop-filter:blur(12px);
+  padding:1.3rem 2.2rem;border-radius:12px;
+  border:1px solid rgba(255,255,255,.9);
+  transition:all .3s ease;flex-shrink:0;min-width:fit-content;
+  box-shadow:0 4px 16px rgba(0,0,0,.1);
+}
+.partner-badge:hover{
+  background:rgba(255,255,255,.95);
+  transform:scale(1.1) translateY(-6px);
+  box-shadow:0 20px 48px rgba(0,0,0,.18);
+}
+.partner-icon{
+  font-size:2.2rem;display:flex;align-items:center;min-width:2.2rem;justify-content:center;
+}
+.partner-name{
+  font-family:var(--f-display);font-size:1.15rem;font-weight:700;
+  color:var(--ink);letter-spacing:-0.01em;white-space:nowrap;
+}
 .partners-location{
-  font-family:var(--f-mono);font-size:.9rem;color:var(--ink-3);
-  display:flex;align-items:center;justify-content:center;gap:.5rem;margin-top:1rem;
+  font-family:var(--f-display);font-size:1rem;font-weight:600;color:var(--navy);
+  display:inline-flex;align-items:center;gap:.8rem;margin-top:3rem;
+  padding:1.2rem 2.5rem;background:rgba(12,35,64,.075);
+  border-radius:10px;border:2px solid rgba(12,35,64,.15);
 }
 
 /* ── STATS ── */
@@ -543,14 +580,20 @@ footer{background:var(--navy);padding:1.75rem 3rem;display:flex;justify-content:
 <!-- PARTNERS BAR -->
 <section class="partners">
   <div class="partners-inner">
-    <div class="partners-label">Powered by</div>
-    <div class="partners-list">
-      <span class="partner-item">✓ Microsoft Azure</span>
-      <span class="partner-item">✓ Claude AI</span>
-      <span class="partner-item">✓ Enterprise encryption</span>
-      <span class="partner-item">✓ Zero data retention</span>
+    <div class="partners-label">Trusted by practices building on cutting-edge AI</div>
+    <div class="partners-scroll">
+      <div class="partners-track" id="partnersTrack">
+        <span class="partner-badge"><span class="partner-icon">☁️</span> <span class="partner-name">Microsoft Azure</span></span>
+        <span class="partner-badge"><span class="partner-icon">🤖</span> <span class="partner-name">Claude AI</span></span>
+        <span class="partner-badge"><span class="partner-icon">🔐</span> <span class="partner-name">AES-256 Encryption</span></span>
+        <span class="partner-badge"><span class="partner-icon">✓</span> <span class="partner-name">Zero Data Retention</span></span>
+        <span class="partner-badge"><span class="partner-icon">☁️</span> <span class="partner-name">Microsoft Azure</span></span>
+        <span class="partner-badge"><span class="partner-icon">🤖</span> <span class="partner-name">Claude AI</span></span>
+        <span class="partner-badge"><span class="partner-icon">🔐</span> <span class="partner-name">AES-256 Encryption</span></span>
+        <span class="partner-badge"><span class="partner-icon">✓</span> <span class="partner-name">Zero Data Retention</span></span>
+      </div>
     </div>
-    <div class="partners-location"><span>📍</span> Local to Scottsdale, Arizona</div>
+    <div class="partners-location"><span>📍</span> <strong>Local to Scottsdale, Arizona</strong></div>
   </div>
 </section>
 
