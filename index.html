@@ -1028,21 +1028,87 @@ function calcRoi(){
   document.getElementById('roi-pb').textContent=mo>0?(2500/Math.max(mo,1)).toFixed(1)+' mo':'—';
 }
 
-// ── FORM ─────────────────────────────────────────────────────────
+// ── FORM (Supabase integration) ───────────────────────────────────
+// NOTE: To enable collection, create a table named `submissions` in your
+// Supabase project and obtain the anon public key. Example SQL:
+//
+// CREATE TABLE public.submissions (
+//   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
+//   name text,
+//   email text,
+//   phone text,
+//   practice_type text,
+//   message text,
+//   created_at timestamptz DEFAULT now()
+// );
+// ALTER TABLE public.submissions ENABLE ROW LEVEL SECURITY;
+// CREATE POLICY "allow_insert" ON public.submissions
+//   FOR INSERT USING (true) WITH CHECK (true);
+//
+// In Supabase dashboard: Settings → API to copy the anon public key and
+// use it below. Using the anon key from Supabase for client-side inserts
+// is acceptable for this use-case; for private keys, use a server function.
+
+const SUPABASE_URL = 'https://ankrsrdfjcxxmcezqsxy.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_UXqhiHhT8_kvpJMtNkXOlg_67utyq2f'; // <-- paste anon key here
+const SUBMISSIONS_TABLE = 'submissions';
+
+async function submitToSupabase(row){
+  if(!SUPABASE_ANON_KEY || SUPABASE_ANON_KEY==='YOUR_SUPABASE_ANON_KEY') return false;
+  try{
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/${SUBMISSIONS_TABLE}`,{
+      method:'POST',
+      headers:{
+        'Content-Type':'application/json',
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer '+SUPABASE_ANON_KEY,
+        'Prefer':'return=representation'
+      },
+      body: JSON.stringify(row)
+    });
+    return res.ok;
+  }catch(err){
+    return false;
+  }
+}
+
+// Fallback to old Formspree behavior if you prefer (set FID above).
 const FID='YOUR_FORM_ID';
 async function postForm(d){
   if(FID==='YOUR_FORM_ID')return true;
   try{const r=await fetch('https://formspree.io/f/'+FID,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(d)});return r.ok;}catch(e){return false;}
 }
+
 async function sfSubmit(){
   const n=document.getElementById('sf-name').value.trim();
   const e=document.getElementById('sf-email').value.trim();
   if(!n||!e){alert('Please fill in your name and email.');return;}
   const btn=document.querySelector('#sf-inner .f-submit');
   btn.textContent='One moment…';btn.disabled=true;
-  const ok=await postForm({name:n,phone:document.getElementById('sf-phone').value,email:e,practiceType:document.getElementById('sf-type').value,_subject:'New demo request — Okrana'});
-  if(ok){document.getElementById('sf-inner').style.display='none';document.getElementById('sf-success').style.display='block';}
-  else{btn.textContent='Book my free 20-minute call →';btn.disabled=false;alert('Something went wrong — please email hello@okrana.com');}
+
+  const payload = {
+    name: n,
+    email: e,
+    phone: document.getElementById('sf-phone').value || null,
+    practice_type: document.getElementById('sf-type').value || null,
+    message: document.getElementById('sf-message')?document.getElementById('sf-message').value:null
+  };
+
+  // Prefer Supabase if anon key provided
+  let ok = false;
+  if(SUPABASE_ANON_KEY && SUPABASE_ANON_KEY!=='YOUR_SUPABASE_ANON_KEY'){
+    ok = await submitToSupabase(payload);
+  } else {
+    ok = await postForm({name:n,phone:payload.phone,email:e,practiceType:payload.practice_type,_subject:'New demo request — Okrana'});
+  }
+
+  if(ok){
+    document.getElementById('sf-inner').style.display='none';
+    document.getElementById('sf-success').style.display='block';
+  } else {
+    btn.textContent='Book my free 20-minute call →';btn.disabled=false;
+    alert('Submission failed — please check your Supabase anon key or email hello@okrana.com');
+  }
 }
 
 // ── COUNTERS ─────────────────────────────────────────────────────
