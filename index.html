@@ -1079,7 +1079,101 @@ async function postForm(d){
   try{const r=await fetch('https://formspree.io/f/'+FID,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(d)});return r.ok;}catch(e){return false;}
 }
 
-async function sfSubmit(){
+<script>
+async function sfSubmit() {
+  console.log("submit clicked");
+
+  const n = document.getElementById('sf-name').value.trim();
+  const e = document.getElementById('sf-email').value.trim();
+
+  if (!n || !e) {
+    alert('Please fill in your name and email.');
+    return;
+  }
+
+  const btn = document.querySelector('#sf-inner .f-submit');
+
+  btn.textContent = 'One moment…';
+  btn.disabled = true;
+
+  const payload = {
+    name: n,
+    email: e,
+    phone: document.getElementById('sf-phone')?.value || null,
+    practice_type: document.getElementById('sf-type')?.value || null,
+    message: document.getElementById('sf-message')?.value || null
+  };
+
+  console.log("payload:", payload);
+
+  let ok = false;
+
+  try {
+
+    // SUPABASE PATH
+    if (
+      typeof SUPABASE_ANON_KEY !== 'undefined' &&
+      SUPABASE_ANON_KEY &&
+      SUPABASE_ANON_KEY !== 'YOUR_SUPABASE_ANON_KEY'
+    ) {
+
+      console.log("sending to supabase...");
+
+      const res = await fetch(
+        'https://ankrsrdfjcxxmcezqsxy.supabase.co/rest/v1/submissions',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'apikey': SUPABASE_ANON_KEY,
+            'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+            'Prefer': 'return=representation'
+          },
+          body: JSON.stringify(payload)
+        }
+      );
+
+      console.log("status:", res.status);
+
+      const text = await res.text();
+
+      console.log("response:", text);
+
+      ok = res.ok;
+
+    } else {
+
+      console.log("supabase key missing");
+
+      ok = await postForm({
+        name: n,
+        phone: payload.phone,
+        email: e,
+        practiceType: payload.practice_type,
+        _subject: 'New demo request — Okrana'
+      });
+    }
+
+  } catch (err) {
+
+    console.error("submit error:", err);
+
+  }
+
+  if (ok) {
+
+    document.getElementById('sf-inner').style.display = 'none';
+    document.getElementById('sf-success').style.display = 'block';
+
+  } else {
+
+    btn.textContent = 'Book my free 20-minute call →';
+    btn.disabled = false;
+
+    alert('Submission failed — check console.');
+  }
+}
+</script>
   const n=document.getElementById('sf-name').value.trim();
   const e=document.getElementById('sf-email').value.trim();
   if(!n||!e){alert('Please fill in your name and email.');return;}
