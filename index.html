@@ -1,871 +1,147 @@
-<!DOCTYPE html>
-
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Okrana — Secure AI Infrastructure for Regulated Teams</title>
-<meta name="description" content="HIPAA-ready private AI for healthcare, legal, and financial firms. Signed BAA. Enterprise-grade infrastructure. 48-hour onboarding." />
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{
---bg:#07111f;
---bg2:#0b1728;
---card:#0f1d31;
---card2:#13243c;
---line:rgba(255,255,255,.08);
---text:#f4f7fb;
---muted:#9eb0c7;
---blue:#5aa9ff;
---blue2:#8bc3ff;
---green:#31d0aa;
---shadow:0 10px 40px rgba(0,0,0,.35);
---radius:20px;
-}
-
-html{scroll-behavior:smooth}
-body{
-font-family:'Inter',sans-serif;
-background:linear-gradient(180deg,var(--bg),#050b14);
-color:var(--text);
-overflow-x:hidden;
-}
-
-a{text-decoration:none;color:inherit}
-img{max-width:100%;display:block}
-
-.container{
-width:min(1200px,92vw);
-margin:auto;
-}
-
-/* NAV */
-nav{
-position:fixed;
-top:0;
-left:0;
-right:0;
-z-index:1000;
-backdrop-filter:blur(16px);
-background:rgba(5,11,20,.7);
-border-bottom:1px solid var(--line);
-}
-
-.nav-inner{
-height:78px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-}
-
-.logo{
-font-size:1.4rem;
-font-weight:800;
-letter-spacing:-0.03em;
-}
-
-.logo span{color:var(--blue)}
-
-.nav-links{
-display:flex;
-gap:2rem;
-color:var(--muted);
-font-size:.95rem;
-}
-
-.nav-links a:hover{color:var(--text)}
-
-.nav-actions{
-display:flex;
-gap:1rem;
-align-items:center;
-}
-
-.btn{
-padding:.9rem 1.4rem;
-border-radius:14px;
-font-weight:600;
-transition:.2s ease;
-display:inline-flex;
-align-items:center;
-gap:.6rem;
-}
-
-.btn-outline{
-border:1px solid var(--line);
-color:var(--text);
-}
-
-.btn-outline:hover{
-background:rgba(255,255,255,.04);
-}
-
-.btn-primary{
-background:linear-gradient(135deg,var(--blue),#2b7fff);
-color:white;
-box-shadow:0 10px 30px rgba(60,130,255,.35);
-}
-
-.btn-primary:hover{
-transform:translateY(-2px);
-}
-
-/* HERO */
-.hero{
-padding:160px 0 110px;
-position:relative;
-}
-
-.hero-grid{
-display:grid;
-grid-template-columns:1.1fr .9fr;
-gap:4rem;
-align-items:center;
-}
-
-.eyebrow{
-display:inline-flex;
-align-items:center;
-gap:.6rem;
-padding:.55rem .9rem;
-background:rgba(90,169,255,.08);
-border:1px solid rgba(90,169,255,.18);
-color:var(--blue2);
-border-radius:999px;
-font-size:.78rem;
-font-weight:600;
-margin-bottom:1.5rem;
-}
-
-.hero h1{
-font-size:clamp(3.3rem,7vw,6rem);
-line-height:.95;
-letter-spacing:-0.06em;
-margin-bottom:1.5rem;
-}
-
-.hero h1 span{
-background:linear-gradient(135deg,#fff,var(--blue2));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.hero p{
-font-size:1.1rem;
-line-height:1.8;
-color:var(--muted);
-max-width:650px;
-margin-bottom:2rem;
-}
-
-.hero-actions{
-display:flex;
-gap:1rem;
-margin-bottom:2rem;
-flex-wrap:wrap;
-}
-
-.hero-tags{
-display:flex;
-flex-wrap:wrap;
-gap:.8rem;
-}
-
-.hero-tag{
-padding:.6rem 1rem;
-background:rgba(255,255,255,.04);
-border:1px solid var(--line);
-border-radius:999px;
-font-size:.85rem;
-color:var(--muted);
-}
-
-/* DASHBOARD */
-.dashboard{
-background:linear-gradient(180deg,var(--card),var(--card2));
-border:1px solid var(--line);
-border-radius:28px;
-padding:1.2rem;
-box-shadow:var(--shadow);
-position:relative;
-overflow:hidden;
-}
-
-.dashboard::before{
-content:'';
-position:absolute;
-inset:0;
-background:radial-gradient(circle at top right,rgba(90,169,255,.15),transparent 40%);
-pointer-events:none;
-}
-
-.db-top{
-display:flex;
-align-items:center;
-justify-content:space-between;
-padding-bottom:1rem;
-border-bottom:1px solid var(--line);
-margin-bottom:1rem;
-}
-
-.db-title{
-font-weight:700;
-}
-
-.db-status{
-color:var(--green);
-font-size:.9rem;
-}
-
-.db-card{
-background:rgba(255,255,255,.03);
-border:1px solid var(--line);
-border-radius:20px;
-padding:1rem;
-margin-bottom:1rem;
-}
-
-.db-card h4{
-margin-bottom:.8rem;
-font-size:.95rem;
-}
-
-.db-chat{
-display:flex;
-flex-direction:column;
-gap:.8rem;
-}
-
-.msg{
-padding:.9rem 1rem;
-border-radius:16px;
-font-size:.92rem;
-line-height:1.7;
-}
-
-.msg.user{
-background:rgba(90,169,255,.14);
-align-self:flex-end;
-max-width:85%;
-}
-
-.msg.ai{
-background:rgba(255,255,255,.05);
-border:1px solid var(--line);
-max-width:90%;
-}
-
-/* TRUST */
-.trust{
-padding:90px 0;
-}
-
-.section-title{
-font-size:clamp(2rem,5vw,3.8rem);
-letter-spacing:-0.05em;
-line-height:1;
-margin-bottom:1rem;
-}
-
-.section-sub{
-color:var(--muted);
-line-height:1.8;
-max-width:700px;
-}
-
-.trust-grid{
-display:grid;
-grid-template-columns:repeat(4,1fr);
-gap:1.2rem;
-margin-top:3rem;
-}
-
-.trust-card{
-background:rgba(255,255,255,.03);
-border:1px solid var(--line);
-border-radius:24px;
-padding:1.6rem;
-}
-
-.trust-card h3{
-font-size:2.2rem;
-margin-bottom:.5rem;
-}
-
-.trust-card p{
-font-size:.95rem;
-line-height:1.7;
-color:var(--muted);
-}
-
-/* FEATURES */
-.features{
-padding:40px 0 100px;
-}
-
-.feature-grid{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:1.5rem;
-margin-top:3rem;
-}
-
-.feature-card{
-background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
-border:1px solid var(--line);
-border-radius:24px;
-padding:2rem;
-transition:.25s ease;
-}
-
-.feature-card:hover{
-transform:translateY(-5px);
-border-color:rgba(90,169,255,.25);
-}
-
-.feature-icon{
-width:54px;
-height:54px;
-border-radius:16px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:rgba(90,169,255,.1);
-font-size:1.3rem;
-margin-bottom:1.3rem;
-}
-
-.feature-card h4{
-font-size:1.15rem;
-margin-bottom:.8rem;
-}
-
-.feature-card p{
-color:var(--muted);
-line-height:1.8;
-font-size:.95rem;
-}
-
-/* CTA */
-.cta{
-padding:80px 0 120px;
-}
-
-.cta-box{
-background:linear-gradient(135deg,#0f1d31,#13243c);
-border:1px solid var(--line);
-border-radius:32px;
-padding:4rem;
-text-align:center;
-position:relative;
-overflow:hidden;
-}
-
-.cta-box::before{
-content:'';
-position:absolute;
-width:600px;
-height:600px;
-background:radial-gradient(circle,rgba(90,169,255,.12),transparent 70%);
-top:-300px;
-left:50%;
-transform:translateX(-50%);
-}
-
-.cta-box h2{
-font-size:clamp(2.5rem,6vw,4.5rem);
-letter-spacing:-0.05em;
-margin-bottom:1rem;
-position:relative;
-}
-
-.cta-box p{
-max-width:700px;
-margin:auto;
-color:var(--muted);
-line-height:1.8;
-margin-bottom:2rem;
-position:relative;
-}
-
-footer{
-padding:2rem 0;
-border-top:1px solid var(--line);
-}
-
-.footer-inner{
-display:flex;
-justify-content:space-between;
-align-items:center;
-color:var(--muted);
-font-size:.92rem;
-}
-
-@media(max-width:1000px){
-.hero-grid,.feature-grid,.trust-grid{
-grid-template-columns:1fr;
-}
-
-.nav-links{
-display:none;
-}
-
-.hero{
-padding-top:130px;
-}
-
-.hero h1{
-font-size:3.2rem;
-}
-
-.cta-box{
-padding:2rem;
-}
-
-.footer-inner{
-flex-direction:column;
-gap:1rem;
-text-align:center;
-}
-}
-/* INTERACTIVE FLOATING ELEMENTS */
-.hero::before{
-content:'';
-position:absolute;
-width:500px;
-height:500px;
-background:radial-gradient(circle,rgba(90,169,255,.18),transparent 70%);
-top:-180px;
-right:-120px;
-filter:blur(20px);
-animation:floatGlow 8s ease-in-out infinite;
-}
-
-.hero::after{
-content:'';
-position:absolute;
-width:380px;
-height:380px;
-background:radial-gradient(circle,rgba(49,208,170,.12),transparent 70%);
-bottom:-180px;
-left:-100px;
-filter:blur(20px);
-animation:floatGlow 10s ease-in-out infinite reverse;
-}
-
-@keyframes floatGlow{
-0%,100%{transform:translateY(0px)}
-50%{transform:translateY(-20px)}
-}
-
-/* LIVE METRICS */
-.live-strip{
-padding:1rem 0;
-border-top:1px solid var(--line);
-border-bottom:1px solid var(--line);
-background:rgba(255,255,255,.02);
-backdrop-filter:blur(10px);
-overflow:hidden;
-}
-
-.live-track{
-display:flex;
-gap:3rem;
-white-space:nowrap;
-animation:scrollTrack 26s linear infinite;
-}
-
-.live-item{
-color:var(--muted);
-font-size:.92rem;
-}
-
-.live-item strong{
-color:var(--text);
-}
-
-@keyframes scrollTrack{
-from{transform:translateX(0)}
-to{transform:translateX(-50%)}
-}
-
-/* PLATFORM PREVIEW */
-.platform-preview{
-padding:100px 0;
-}
-
-.preview-grid{
-display:grid;
-grid-template-columns:1fr 1fr;
-gap:2rem;
-margin-top:3rem;
-}
-
-.preview-card{
-background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
-border:1px solid var(--line);
-border-radius:28px;
-padding:2rem;
-position:relative;
-overflow:hidden;
-transition:.25s ease;
-}
-
-.preview-card:hover{
-transform:translateY(-5px);
-border-color:rgba(90,169,255,.25);
-}
-
-.preview-top{
-display:flex;
-align-items:center;
-justify-content:space-between;
-margin-bottom:1.5rem;
-}
-
-.preview-badge{
-padding:.4rem .7rem;
-background:rgba(49,208,170,.1);
-color:var(--green);
-border-radius:999px;
-font-size:.78rem;
-font-weight:600;
-}
-
-.mini-chart{
-height:180px;
-border-radius:18px;
-background:linear-gradient(180deg,rgba(90,169,255,.12),transparent);
-border:1px solid rgba(255,255,255,.06);
-position:relative;
-overflow:hidden;
-}
-
-.chart-line{
-position:absolute;
-left:0;
-right:0;
-bottom:30px;
-height:120px;
-background:linear-gradient(180deg,transparent,rgba(90,169,255,.18));
-clip-path:path('M0 100 Q 80 30 160 70 T 320 40 T 640 0 V 120 H0');
-}
-
-.activity-feed{
-display:flex;
-flex-direction:column;
-gap:.8rem;
-}
-
-.feed-item{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:.9rem 1rem;
-background:rgba(255,255,255,.03);
-border:1px solid var(--line);
-border-radius:14px;
-font-size:.9rem;
-}
-
-.feed-status{
-color:var(--green);
-font-size:.82rem;
-}
-
-/* SOCIAL PROOF */
-.logo-cloud{
-padding:40px 0 20px;
-opacity:.65;
-}
-
-.logo-row{
-display:flex;
-justify-content:space-between;
-flex-wrap:wrap;
-gap:1rem;
-}
-
-.logo-pill{
-padding:1rem 1.3rem;
-background:rgba(255,255,255,.03);
-border:1px solid var(--line);
-border-radius:14px;
-font-weight:600;
-color:var(--muted);
-}
-
-/* HOVER GLOW */
-.feature-card::before,.trust-card::before,.preview-card::before{
-content:'';
-position:absolute;
-inset:0;
-background:radial-gradient(circle at top right,rgba(90,169,255,.10),transparent 35%);
-pointer-events:none;
-opacity:0;
-transition:.25s ease;
-}
-
-.feature-card:hover::before,.trust-card:hover::before,.preview-card:hover::before{
-opacity:1;
-}
-
-@media(max-width:1000px){
-.preview-grid{
-grid-template-columns:1fr;
-}
-
-.logo-row{
-justify-content:center;
-}
-}
-
-</style>
-
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Okrana — The private BAA AI for clinics & regulated practices</title>
+  <meta name="description" content="Okrana is the private, HIPAA-grade AI assistant for medical clinics, law firms and regulated practices. Azure-hosted, zero data retention, BAA included. Built in Scottsdale, AZ." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..700&family=Instrument+Serif:ital@0;1&family=Source+Serif+4:ital,opsz,wght@0,8..60,300..700;1,8..60,300..700&family=Geist:wght@300..700&family=Geist+Mono:wght@400..600&family=DM+Sans:opsz,wght@9..40,300..700&family=IBM+Plex+Sans:wght@300..600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
 </head>
 <body>
+  <div id="root"></div>
 
-<nav>
-<div class="container nav-inner">
-<a href="#" class="logo">Okrana<span>.</span></a>
-<div class="nav-links">
-<a href="#features">Features</a>
-<a href="#security">Security</a>
-<a href="#pricing">Pricing</a>
-<a href="#contact">Contact</a>
-</div>
-<div class="nav-actions">
-<a href="#" class="btn btn-outline">Live Demo</a>
-<a href="#contact" class="btn btn-primary">Book Call</a>
-</div>
-</div>
-</nav>
+  <script type="text/babel" src="tweaks-panel.jsx"></script>
+  <script type="text/babel" src="app.jsx"></script>
+  <script type="text/babel" src="sections.jsx"></script>
 
-<section class="hero">
-<div class="container hero-grid">
-<div>
-<div class="eyebrow">HIPAA Ready · Signed BAA · Enterprise Infrastructure</div>
-<h1>Private AI for <span>regulated industries.</span></h1>
-<p>
-Okrana provides encrypted AI infrastructure for healthcare and legal organizations that need private AI assistants, internal knowledge systems, workflow automation, and secure organizational deployment — all built on enterprise-grade cloud infrastructure.
-</p>
+  <script type="text/babel" data-presets="env,react">
+    const { useState, useEffect } = React;
 
-<div class="hero-actions">
-<a href="#contact" class="btn btn-primary">Book a Demo →</a>
-<a href="#features" class="btn btn-outline">View Platform</a>
-</div>
+    const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+      "palette": [
+        "#f4f1ea",
+        "#1b2030",
+        "#d99a4f"
+      ],
+      "fonts": "instrument-dm",
+      "heroCopy": "default"
+    }/*EDITMODE-END*/;
 
-<div class="hero-tags">
-<div class="hero-tag">🏥 Healthcare</div>
-<div class="hero-tag">⚖️ Legal</div>
-<div class="hero-tag">🔐 Azure Encrypted Infrastructure</div>
-<div class="hero-tag">🧠 Private AI Agents</div>
-<div class="hero-tag">☁️ Dedicated Deployments Available</div>
-</div>
-</div>
-</div>
+    const PALETTES = {
+      "forest-clay":  ["#f6f4ef", "#1f3a2e", "#c97b5a"],
+      "midnight-amber": ["#f4f1ea", "#1b2030", "#d99a4f"],
+      "sage-rose":    ["#f5f3ef", "#3d5a4a", "#b97564"],
+      "ink-clay":     ["#efece4", "#1c1917", "#d97757"],
+    };
+    const paletteOptions = Object.values(PALETTES);
 
-<div class="dashboard">
-<div class="db-top">
-<div class="db-title">Okrana Workspace</div>
-<div class="db-status">● Secure Session Active</div>
-</div>
+    const FONT_PAIRS = {
+      "newsreader-geist":   { serif: "'Newsreader', Georgia, serif",         sans: "'Geist', ui-sans-serif, system-ui, sans-serif",       mono: "'Geist Mono', ui-monospace, monospace" },
+      "instrument-dm":      { serif: "'Instrument Serif', Georgia, serif",   sans: "'DM Sans', ui-sans-serif, system-ui, sans-serif",     mono: "'Geist Mono', ui-monospace, monospace" },
+      "sourceserif-plex":   { serif: "'Source Serif 4', Georgia, serif",     sans: "'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif", mono: "'Geist Mono', ui-monospace, monospace" },
+    };
 
-<div class="db-card">
-<h4>AI Assistant</h4>
-<div class="db-chat">
-<div class="msg user">Summarize this patient intake and generate SOAP notes.</div>
-<div class="msg ai">
-SOAP note generated successfully. No PHI retained after session completion. All activity logged to your encrypted audit environment.
-</div>
-</div>
-</div>
+    function deriveVars(palette) {
+      const [bg, accent, warm] = palette;
+      return {
+        '--bg': bg,
+        '--accent': accent,
+        '--warm': warm,
+        '--accent-ink': bg,
+        '--bg-2': mix(bg, '#000', 0.04),
+        '--line':  mix(bg, '#000', 0.09),
+        '--line-2': mix(bg, '#000', 0.16),
+      };
+    }
+    function mix(a, b, t) {
+      const pa = parse(a), pb = parse(b);
+      const r = Math.round(pa[0]*(1-t) + pb[0]*t);
+      const g = Math.round(pa[1]*(1-t) + pb[1]*t);
+      const bl = Math.round(pa[2]*(1-t) + pb[2]*t);
+      return `rgb(${r}, ${g}, ${bl})`;
+    }
+    function parse(hex){
+      const h = hex.replace('#','');
+      const n = parseInt(h.length===3? h.split('').map(c=>c+c).join('') : h, 16);
+      return [(n>>16)&255, (n>>8)&255, n&255];
+    }
 
-<div class="db-card">
-<h4>Security Overview</h4>
-<div class="db-chat">
-<div class="msg ai">✓ Signed BAA attached</div>
-<div class="msg ai">✓ Zero-retention AI routing enabled</div>
-<div class="msg ai">✓ Private deployment active</div>
-</div>
-</div>
-</div>
-</div>
-</section>
+    function App() {
+      const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
 
-<section class="live-strip">
-<div class="live-track">
-<div class="live-item"><strong>HIPAA-ready infrastructure</strong> · Signed BAA included</div>
-<div class="live-item"><strong>48hr onboarding</strong> · Private deployment architecture</div>
-<div class="live-item"><strong>Zero-retention routing</strong> · Enterprise visibility</div>
-<div class="live-item"><strong>Custom AI workflows</strong> · Legal · Medical · Financial</div>
-<div class="live-item"><strong>Admin controls</strong> · Secure audit logging</div>
-<div class="live-item"><strong>Healthcare AI</strong> · SOC2-ready stack</div>
-<div class="live-item"><strong>Private GPT</strong> · Internal knowledge bases</div>
-</div>
-</section>
+      useEffect(() => {
+        const root = document.documentElement;
+        const vars = deriveVars(t.palette);
+        Object.entries(vars).forEach(([k, v]) => root.style.setProperty(k, v));
 
-<section class="platform-preview">
-<div class="container">
-<h2 class="section-title">Feels like modern SaaS software.</h2>
-<p class="section-sub">
-The best enterprise AI products feel operational, visual, and alive — not like a static landing page. Okrana is positioned closer to platforms like Vanta, Linear, Retool, and Notion AI than old healthcare software.
-</p>
+        const fkey = t.fonts in FONT_PAIRS ? t.fonts : 'newsreader-geist';
+        const fp = FONT_PAIRS[fkey];
+        root.style.setProperty('--font-serif', fp.serif);
+        root.style.setProperty('--font-sans', fp.sans);
+        root.style.setProperty('--font-mono', fp.mono);
+      }, [t.palette, t.fonts]);
 
-<div class="preview-grid">
-<div class="preview-card">
-<div class="preview-top">
-<h3>Workspace Analytics</h3>
-<div class="preview-badge">Live</div>
-</div>
-<div class="mini-chart">
-<div class="chart-line"></div>
-</div>
-<p style="margin-top:1rem;color:var(--muted);line-height:1.8">
-Monitor AI usage, automate workflows, review compliance logs, and track operational savings from one unified dashboard.
-</p>
-</div>
+      return (
+        <>
+          <Nav />
+          <Hero copyKey={t.heroCopy} />
+          <ComparisonDemo />
+          <Features />
+          <UseCases />
+          <Security />
+          <Testimonials />
+          <Pricing />
+          <FAQ />
+          <FooterCTA />
+          <Footer />
 
-<div class="preview-card">
-<div class="preview-top">
-<h3>Realtime Activity</h3>
-<div class="preview-badge">Encrypted</div>
-</div>
-<div class="activity-feed">
-<div class="feed-item"><span>SOAP notes generated</span><span class="feed-status">Secure ✓</span></div>
-<div class="feed-item"><span>Legal discovery summarized</span><span class="feed-status">Completed</span></div>
-<div class="feed-item"><span>Audit export created</span><span class="feed-status">Ready</span></div>
-<div class="feed-item"><span>Knowledge base synced</span><span class="feed-status">Updated</span></div>
-</div>
-</div>
-</div>
-</div>
-</section>
+          <TweaksPanel title="Tweaks">
+            <TweakSection label="Palette" />
+            <TweakColor
+              label="Theme"
+              value={t.palette}
+              options={paletteOptions}
+              onChange={(v) => setTweak('palette', v)}
+            />
 
-<section class="logo-cloud">
-<div class="container">
-<div class="logo-row">
-<div class="logo-pill">Built on Microsoft Azure</div>
-<div class="logo-pill">Encrypted Infrastructure</div>
-<div class="logo-pill">Private AI Workspaces</div>
-<div class="logo-pill">Healthcare & Legal Ready</div>
-<div class="logo-pill">Enterprise Deployment Options</div>
-</div>
-</div>
-</section>
+            <TweakSection label="Typography" />
+            <TweakRadio
+              label="Pairing"
+              value={t.fonts}
+              options={[
+                { value: 'newsreader-geist', label: 'Newsreader / Geist' },
+                { value: 'instrument-dm',    label: 'Instrument / DM' },
+                { value: 'sourceserif-plex', label: 'Source / Plex' },
+              ]}
+              onChange={(v) => setTweak('fonts', v)}
+            />
 
-<section class="trust" id="security">
-<div class="container">
-<h2 class="section-title">Built for compliance-first teams.</h2>
-<p class="section-sub">
-Most AI products were built for consumers. Okrana was built for organizations handling sensitive records, privileged communications, financial data, and protected health information.
-</p>
+            <TweakSection label="Hero copy" />
+            <TweakRadio
+              label="Variant"
+              value={t.heroCopy}
+              options={[
+                { value: 'default', label: 'Warm' },
+                { value: 'trust',   label: 'Privacy' },
+                { value: 'ai',      label: 'Anti-leak' },
+              ]}
+              onChange={(v) => setTweak('heroCopy', v)}
+            />
+          </TweaksPanel>
+        </>
+      );
+    }
 
-<div class="trust-grid">
-<div class="trust-card">
-<h3>Azure</h3>
-<p>Hosted on encrypted enterprise cloud infrastructure designed for organizational deployment and scalability.</p>
-</div>
-
-<div class="trust-card">
-<h3>Private</h3>
-<p>Dedicated AI workspaces with configurable retention controls, secure document handling, and isolated environments.</p>
-</div>
-
-<div class="trust-card">
-<h3>RBAC</h3>
-<p>Organization-wide permissions, administrative oversight, audit visibility, and role-based access architecture.</p>
-</div>
-
-<div class="trust-card">
-<h3>Deploy</h3>
-<p>Flexible deployment options including shared cloud, dedicated infrastructure, and enterprise environments.</p>
-</div>
-</div>
-</div>
-</section>
-
-<section class="features" id="features">
-<div class="container">
-<h2 class="section-title">Enterprise AI infrastructure for healthcare and legal teams.</h2>
-<p class="section-sub">
-Deploy private AI assistants and internal AI systems across your organization with encrypted infrastructure, centralized oversight, configurable access controls, and secure workflow automation.
-</p>
-
-<div class="feature-grid">
-<div class="feature-card">
-<div class="feature-icon">🔒</div>
-<h4>Private AI Environment</h4>
-<p>
-Dedicated AI infrastructure with encrypted storage, audit visibility, and configurable retention controls.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">⚡</div>
-<h4>Workflow Automation</h4>
-<p>
-Generate SOAP notes, summarize cases, draft letters, analyze intake forms, and automate repetitive workflows.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">📊</div>
-<h4>Admin Visibility</h4>
-<p>
-Track usage, manage permissions, control integrations, and maintain compliance oversight from one dashboard.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">🧠</div>
-<h4>Custom Knowledge Bases</h4>
-<p>
-Train AI on your templates, internal documents, procedures, and workflows without exposing data publicly.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">☁️</div>
-<h4>Flexible Deployment</h4>
-<p>
-Choose between shared cloud environments, dedicated enterprise infrastructure, or fully isolated deployments depending on organizational requirements.
-</p>
-</div>
-
-<div class="feature-card">
-<div class="feature-icon">📞</div>
-<h4>White-Glove Support</h4>
-<p>
-Direct access to technical onboarding and implementation support throughout deployment.
-</p>
-</div>
-</div>
-</div>
-</section>
-
-<section class="cta" id="contact">
-<div class="container">
-<div class="cta-box">
-<h2>Deploy secure AI across your organization.</h2>
-<p>
-See how Okrana enables healthcare and legal teams to securely deploy private AI assistants, automate workflows, and centralize organizational knowledge on encrypted enterprise infrastructure.
-</p>
-<a href="mailto:hello@okrana.com" class="btn btn-primary">Schedule a Demo</a>
-</div>
-</div>
-</section>
-
-<footer>
-<div class="container footer-inner">
-<div>© 2026 Okrana LLC</div>
-<div>Private AI Infrastructure for Regulated Organizations</div>
-</div>
-</footer>
-
+    ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+  </script>
 </body>
 </html>
