@@ -206,6 +206,12 @@ nav{
 .partner-icon{
   font-size:2.2rem;display:flex;align-items:center;min-width:2.2rem;justify-content:center;
 }
+.partner-logo{
+  height:28px;width:auto;object-fit:contain;filter:brightness(0) saturate(100%);
+}
+.partner-logo.azure{
+  filter:brightness(0) saturate(100%);
+}
 .partner-name{
   font-family:var(--f-display);font-size:1.15rem;font-weight:700;
   color:var(--ink);letter-spacing:-0.01em;white-space:nowrap;
@@ -567,28 +573,21 @@ footer{background:var(--navy);padding:1.75rem 3rem;display:flex;justify-content:
       <a href="#signup" class="btn-primary">Book a free 20-min call</a>
       <a href="#roi" class="btn-text">Calculate your savings</a>
     </div>
-    <div class="hero-tech">
-      <span class="hero-tech-label">Built on</span>
-      <span class="tech-pill">Microsoft Azure</span>
-      <span class="tech-pill">HIPAA Covered</span>
-      <span class="tech-pill">BAA Day 1</span>
-      <span class="tech-pill">Zero data retention</span>
-    </div>
   </div>
 </section>
 
 <!-- PARTNERS BAR -->
 <section class="partners">
   <div class="partners-inner">
-    <div class="partners-label">Trusted by practices building on cutting-edge AI</div>
+    <div class="partners-label">Our technology partners</div>
     <div class="partners-scroll">
       <div class="partners-track" id="partnersTrack">
-        <span class="partner-badge"><span class="partner-icon">☁️</span> <span class="partner-name">Microsoft Azure</span></span>
-        <span class="partner-badge"><span class="partner-icon">🤖</span> <span class="partner-name">Claude AI</span></span>
+        <span class="partner-badge"><img src="/MS-Azure-logo.svg" alt="Microsoft Azure" class="partner-logo azure"> <span class="partner-name">Microsoft Azure</span></span>
+        <span class="partner-badge"><img src="/claude-logo.svg" alt="Claude" class="partner-logo"> <span class="partner-name">Claude AI</span></span>
         <span class="partner-badge"><span class="partner-icon">🔐</span> <span class="partner-name">AES-256 Encryption</span></span>
         <span class="partner-badge"><span class="partner-icon">✓</span> <span class="partner-name">Zero Data Retention</span></span>
-        <span class="partner-badge"><span class="partner-icon">☁️</span> <span class="partner-name">Microsoft Azure</span></span>
-        <span class="partner-badge"><span class="partner-icon">🤖</span> <span class="partner-name">Claude AI</span></span>
+        <span class="partner-badge"><img src="/MS-Azure-logo.svg" alt="Microsoft Azure" class="partner-logo azure"> <span class="partner-name">Microsoft Azure</span></span>
+        <span class="partner-badge"><img src="/claude-logo.svg" alt="Claude" class="partner-logo"> <span class="partner-name">Claude AI</span></span>
         <span class="partner-badge"><span class="partner-icon">🔐</span> <span class="partner-name">AES-256 Encryption</span></span>
         <span class="partner-badge"><span class="partner-icon">✓</span> <span class="partner-name">Zero Data Retention</span></span>
       </div>
