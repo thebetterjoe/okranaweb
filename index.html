@@ -70,6 +70,24 @@ nav{
 }
 .nav-cta:hover{transform:translateY(-1px)}
 
+/* ── HAMBURGER MENU ── */
+.hamburger{display:none;flex-direction:column;gap:.35rem;background:none;border:none;cursor:pointer;padding:.5rem;margin-right:.5rem}
+.hamburger span{width:22px;height:2px;background:var(--ink);transition:all .3s}
+.hamburger.active span:nth-child(1){transform:rotate(45deg) translateY(10px)}
+.hamburger.active span:nth-child(2){opacity:0}
+.hamburger.active span:nth-child(3){transform:rotate(-45deg) translateY(-10px)}
+
+.dropdown-menu{display:none;position:absolute;top:60px;left:0;background:var(--paper);border-right:1px solid var(--paper-3);border-bottom:1px solid var(--paper-3);min-width:200px;flex-direction:column;z-index:99}
+.dropdown-menu.show{display:flex}
+.dropdown-menu a{padding:1rem;text-decoration:none;color:var(--ink);font-size:.9rem;border-bottom:1px solid var(--paper-3);transition:background .2s}
+.dropdown-menu a:last-child{border-bottom:none}
+.dropdown-menu a:hover{background:var(--paper-2)}
+
+@media(max-width:768px){
+  .hamburger{display:flex}
+  nav{padding:0 1.5rem}
+}
+
 /* ── HERO ── */
 .hero{
   padding:160px 3rem 100px;
@@ -448,9 +466,24 @@ footer{background:var(--navy);padding:1.75rem 3rem;display:flex;justify-content:
 
 <!-- NAV -->
 <nav>
-  <a href="#" class="logo">Okrana<span>.</span></a>
+  <div style="display:flex;align-items:center;gap:0">
+    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+    <a href="#" class="logo">Okrana<span>.</span></a>
+  </div>
   <a href="#signup" class="nav-cta">Book a free call</a>
 </nav>
+
+<!-- DROPDOWN MENU -->
+<div class="dropdown-menu" id="dropdownMenu">
+  <a href="#signin">Sign In</a>
+  <a href="#help">Help & Support</a>
+  <a href="#docs">Documentation</a>
+  <a href="mailto:hello@okrana.com">Contact Sales</a>
+</div>
 
 <!-- STICKY BAR -->
 <div class="sticky" id="sticky">
@@ -788,10 +821,26 @@ footer{background:var(--navy);padding:1.75rem 3rem;display:flex;justify-content:
     <a href="#">Privacy</a><a href="#">BAA Template</a>
     <a href="#">Security</a><a href="mailto:hello@okrana.com">Contact</a>
   </div>
-  <span class="f-copy">© 2025 Okrana LLC · HIPAA-Compliant AI</span>
+  <span class="f-copy">© 2026 Okrana LLC · HIPAA-Compliant AI</span>
 </footer>
 
 <script>
+// ── HAMBURGER MENU ───────────────────────────────────────────────
+function toggleMenu(){
+  const hamburger=document.getElementById('hamburger');
+  const menu=document.getElementById('dropdownMenu');
+  hamburger.classList.toggle('active');
+  menu.classList.toggle('show');
+}
+document.addEventListener('click',e=>{
+  const hamburger=document.getElementById('hamburger');
+  const menu=document.getElementById('dropdownMenu');
+  if(!hamburger.contains(e.target)&&!menu.contains(e.target)){
+    hamburger.classList.remove('active');
+    menu.classList.remove('show');
+  }
+});
+
 // ── STICKY ───────────────────────────────────────────────────────
 window.addEventListener('scroll',()=>{
   document.getElementById('sticky').classList.toggle('show',window.scrollY>500);
