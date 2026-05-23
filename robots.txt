@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://okrana.com/sitemap.xml
