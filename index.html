@@ -1,745 +1,869 @@
-# index.html
-
-```html
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Okrana — Private AI Infrastructure for Regulated Teams</title>
+<title>Okrana — Secure AI Infrastructure for Regulated Teams</title>
+<meta name="description" content="HIPAA-ready private AI for healthcare, legal, and financial firms. Signed BAA. Enterprise-grade infrastructure. 48-hour onboarding." />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-*{
-  margin:0;
-  padding:0;
-  box-sizing:border-box;
-}
-
+*{margin:0;padding:0;box-sizing:border-box}
 :root{
-  --bg:#07111f;
-  --panel:#0d1728;
-  --panel2:#101d31;
-  --line:rgba(255,255,255,.08);
-  --text:#f4f7fb;
-  --muted:#8fa1bc;
-  --primary:#4f8cff;
-  --primary2:#6ca2ff;
-  --green:#2ed47a;
-  --danger:#ff6b6b;
+--bg:#07111f;
+--bg2:#0b1728;
+--card:#0f1d31;
+--card2:#13243c;
+--line:rgba(255,255,255,.08);
+--text:#f4f7fb;
+--muted:#9eb0c7;
+--blue:#5aa9ff;
+--blue2:#8bc3ff;
+--green:#31d0aa;
+--shadow:0 10px 40px rgba(0,0,0,.35);
+--radius:20px;
 }
 
+html{scroll-behavior:smooth}
 body{
-  font-family:'Inter',sans-serif;
-  background:linear-gradient(to bottom,#07111f,#0b1524 30%,#09101b);
-  color:var(--text);
-  overflow-x:hidden;
+font-family:'Inter',sans-serif;
+background:linear-gradient(180deg,var(--bg),#050b14);
+color:var(--text);
+overflow-x:hidden;
 }
 
 a{text-decoration:none;color:inherit}
+img{max-width:100%;display:block}
 
 .container{
-  width:min(1200px,92%);
-  margin:auto;
+width:min(1200px,92vw);
+margin:auto;
 }
 
+/* NAV */
 nav{
-  position:fixed;
-  top:0;
-  width:100%;
-  z-index:1000;
-  backdrop-filter:blur(14px);
-  background:rgba(7,17,31,.75);
-  border-bottom:1px solid var(--line);
+position:fixed;
+top:0;
+left:0;
+right:0;
+z-index:1000;
+backdrop-filter:blur(16px);
+background:rgba(5,11,20,.7);
+border-bottom:1px solid var(--line);
 }
 
 .nav-inner{
-  height:74px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+height:78px;
+display:flex;
+align-items:center;
+justify-content:space-between;
 }
 
 .logo{
-  font-size:1.35rem;
-  font-weight:800;
-  letter-spacing:-0.04em;
+font-size:1.4rem;
+font-weight:800;
+letter-spacing:-0.03em;
 }
 
-.logo span{
-  color:var(--primary2);
-}
+.logo span{color:var(--blue)}
 
 .nav-links{
-  display:flex;
-  gap:2rem;
-  color:var(--muted);
-  font-size:.95rem;
+display:flex;
+gap:2rem;
+color:var(--muted);
+font-size:.95rem;
 }
 
-.nav-btn{
-  background:var(--primary);
-  padding:.85rem 1.2rem;
-  border-radius:12px;
-  font-weight:600;
-  box-shadow:0 10px 40px rgba(79,140,255,.3);
+.nav-links a:hover{color:var(--text)}
+
+.nav-actions{
+display:flex;
+gap:1rem;
+align-items:center;
 }
 
-.hero{
-  padding-top:140px;
-  padding-bottom:90px;
-  position:relative;
+.btn{
+padding:.9rem 1.4rem;
+border-radius:14px;
+font-weight:600;
+transition:.2s ease;
+display:inline-flex;
+align-items:center;
+gap:.6rem;
 }
 
-.glow{
-  position:absolute;
-  width:500px;
-  height:500px;
-  background:radial-gradient(circle,rgba(79,140,255,.25),transparent 70%);
-  top:-100px;
-  left:50%;
-  transform:translateX(-50%);
-  filter:blur(40px);
-  z-index:-1;
+.btn-outline{
+border:1px solid var(--line);
+color:var(--text);
 }
 
-.hero-grid{
-  display:grid;
-  grid-template-columns:1.1fr .9fr;
-  gap:3rem;
-  align-items:center;
-}
-
-.badge{
-  display:inline-flex;
-  align-items:center;
-  gap:.6rem;
-  background:rgba(79,140,255,.12);
-  border:1px solid rgba(79,140,255,.25);
-  color:#b8d0ff;
-  padding:.65rem 1rem;
-  border-radius:999px;
-  font-size:.82rem;
-  margin-bottom:1.5rem;
-}
-
-.hero h1{
-  font-size:clamp(3rem,6vw,5.6rem);
-  line-height:1;
-  letter-spacing:-0.06em;
-  margin-bottom:1.5rem;
-}
-
-.hero h1 span{
-  color:var(--primary2);
-}
-
-.hero p{
-  color:var(--muted);
-  font-size:1.1rem;
-  line-height:1.8;
-  max-width:650px;
-  margin-bottom:2rem;
-}
-
-.hero-actions{
-  display:flex;
-  gap:1rem;
-  margin-bottom:2rem;
-}
-
-.btn-primary,
-.btn-secondary{
-  padding:1rem 1.4rem;
-  border-radius:14px;
-  font-weight:600;
+.btn-outline:hover{
+background:rgba(255,255,255,.04);
 }
 
 .btn-primary{
-  background:var(--primary);
-  box-shadow:0 10px 35px rgba(79,140,255,.35);
+background:linear-gradient(135deg,var(--blue),#2b7fff);
+color:white;
+box-shadow:0 10px 30px rgba(60,130,255,.35);
 }
 
-.btn-secondary{
-  border:1px solid var(--line);
-  background:rgba(255,255,255,.03);
+.btn-primary:hover{
+transform:translateY(-2px);
 }
 
-.metrics{
-  display:flex;
-  gap:1.5rem;
-  flex-wrap:wrap;
+/* HERO */
+.hero{
+padding:160px 0 110px;
+position:relative;
 }
 
-.metric{
-  background:rgba(255,255,255,.03);
-  border:1px solid var(--line);
-  padding:1rem 1.2rem;
-  border-radius:16px;
-  min-width:150px;
+.hero-grid{
+display:grid;
+grid-template-columns:1.1fr .9fr;
+gap:4rem;
+align-items:center;
 }
 
-.metric h3{
-  font-size:1.5rem;
-  margin-bottom:.35rem;
+.eyebrow{
+display:inline-flex;
+align-items:center;
+gap:.6rem;
+padding:.55rem .9rem;
+background:rgba(90,169,255,.08);
+border:1px solid rgba(90,169,255,.18);
+color:var(--blue2);
+border-radius:999px;
+font-size:.78rem;
+font-weight:600;
+margin-bottom:1.5rem;
 }
 
-.metric p{
-  font-size:.85rem;
-  margin:0;
+.hero h1{
+font-size:clamp(3.3rem,7vw,6rem);
+line-height:.95;
+letter-spacing:-0.06em;
+margin-bottom:1.5rem;
 }
 
+.hero h1 span{
+background:linear-gradient(135deg,#fff,var(--blue2));
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+
+.hero p{
+font-size:1.1rem;
+line-height:1.8;
+color:var(--muted);
+max-width:650px;
+margin-bottom:2rem;
+}
+
+.hero-actions{
+display:flex;
+gap:1rem;
+margin-bottom:2rem;
+flex-wrap:wrap;
+}
+
+.hero-tags{
+display:flex;
+flex-wrap:wrap;
+gap:.8rem;
+}
+
+.hero-tag{
+padding:.6rem 1rem;
+background:rgba(255,255,255,.04);
+border:1px solid var(--line);
+border-radius:999px;
+font-size:.85rem;
+color:var(--muted);
+}
+
+/* DASHBOARD */
 .dashboard{
-  background:linear-gradient(180deg,#111c2e,#0b1321);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:28px;
-  overflow:hidden;
-  box-shadow:0 30px 80px rgba(0,0,0,.45);
+background:linear-gradient(180deg,var(--card),var(--card2));
+border:1px solid var(--line);
+border-radius:28px;
+padding:1.2rem;
+box-shadow:var(--shadow);
+position:relative;
+overflow:hidden;
 }
 
-.dash-top{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:1rem 1.2rem;
-  border-bottom:1px solid var(--line);
+.dashboard::before{
+content:'';
+position:absolute;
+inset:0;
+background:radial-gradient(circle at top right,rgba(90,169,255,.15),transparent 40%);
+pointer-events:none;
 }
 
-.dots{
-  display:flex;
-  gap:.5rem;
+.db-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+padding-bottom:1rem;
+border-bottom:1px solid var(--line);
+margin-bottom:1rem;
 }
 
-.dot{
-  width:10px;
-  height:10px;
-  border-radius:50%;
+.db-title{
+font-weight:700;
 }
 
-.dot.red{background:#ff5f56}
-.dot.yellow{background:#ffbd2e}
-.dot.green{background:#27c93f}
-
-.dash-body{
-  padding:1.2rem;
+.db-status{
+color:var(--green);
+font-size:.9rem;
 }
 
-.chat{
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
+.db-card{
+background:rgba(255,255,255,.03);
+border:1px solid var(--line);
+border-radius:20px;
+padding:1rem;
+margin-bottom:1rem;
+}
+
+.db-card h4{
+margin-bottom:.8rem;
+font-size:.95rem;
+}
+
+.db-chat{
+display:flex;
+flex-direction:column;
+gap:.8rem;
 }
 
 .msg{
-  padding:1rem;
-  border-radius:18px;
-  line-height:1.7;
-  font-size:.93rem;
+padding:.9rem 1rem;
+border-radius:16px;
+font-size:.92rem;
+line-height:1.7;
 }
 
 .msg.user{
-  background:rgba(79,140,255,.12);
-  border:1px solid rgba(79,140,255,.25);
+background:rgba(90,169,255,.14);
+align-self:flex-end;
+max-width:85%;
 }
 
 .msg.ai{
-  background:rgba(255,255,255,.04);
-  border:1px solid var(--line);
+background:rgba(255,255,255,.05);
+border:1px solid var(--line);
+max-width:90%;
 }
 
-.section{
-  padding:90px 0;
+/* TRUST */
+.trust{
+padding:90px 0;
 }
 
-.section-head{
-  text-align:center;
-  max-width:760px;
-  margin:auto;
-  margin-bottom:4rem;
+.section-title{
+font-size:clamp(2rem,5vw,3.8rem);
+letter-spacing:-0.05em;
+line-height:1;
+margin-bottom:1rem;
 }
 
-.section-head span{
-  color:var(--primary2);
-  font-weight:700;
-  text-transform:uppercase;
-  letter-spacing:.15em;
-  font-size:.8rem;
+.section-sub{
+color:var(--muted);
+line-height:1.8;
+max-width:700px;
 }
 
-.section-head h2{
-  font-size:clamp(2rem,4vw,4rem);
-  margin:1rem 0;
-  letter-spacing:-0.05em;
+.trust-grid{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:1.2rem;
+margin-top:3rem;
 }
 
-.section-head p{
-  color:var(--muted);
-  line-height:1.8;
+.trust-card{
+background:rgba(255,255,255,.03);
+border:1px solid var(--line);
+border-radius:24px;
+padding:1.6rem;
 }
 
-.cards{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1.5rem;
+.trust-card h3{
+font-size:2.2rem;
+margin-bottom:.5rem;
 }
 
-.card{
-  background:rgba(255,255,255,.03);
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:2rem;
+.trust-card p{
+font-size:.95rem;
+line-height:1.7;
+color:var(--muted);
 }
 
-.card-icon{
-  width:56px;
-  height:56px;
-  border-radius:16px;
-  background:rgba(79,140,255,.15);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-bottom:1.5rem;
-  font-size:1.3rem;
+/* FEATURES */
+.features{
+padding:40px 0 100px;
 }
 
-.card h3{
-  margin-bottom:1rem;
-  font-size:1.2rem;
+.feature-grid{
+display:grid;
+grid-template-columns:repeat(3,1fr);
+gap:1.5rem;
+margin-top:3rem;
 }
 
-.card p{
-  color:var(--muted);
-  line-height:1.8;
+.feature-card{
+background:linear-gradient(180deg,rgba(255,255,255,.04),rgba(255,255,255,.02));
+border:1px solid var(--line);
+border-radius:24px;
+padding:2rem;
+transition:.25s ease;
 }
 
-.split{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:2rem;
-  align-items:center;
+.feature-card:hover{
+transform:translateY(-5px);
+border-color:rgba(90,169,255,.25);
 }
 
-.panel{
-  background:rgba(255,255,255,.03);
-  border:1px solid var(--line);
-  border-radius:28px;
-  padding:2rem;
+.feature-icon{
+width:54px;
+height:54px;
+border-radius:16px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:rgba(90,169,255,.1);
+font-size:1.3rem;
+margin-bottom:1.3rem;
 }
 
-.list{
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
+.feature-card h4{
+font-size:1.15rem;
+margin-bottom:.8rem;
 }
 
-.list-item{
-  display:flex;
-  gap:1rem;
+.feature-card p{
+color:var(--muted);
+line-height:1.8;
+font-size:.95rem;
 }
 
-.list-item strong{
-  display:block;
-  margin-bottom:.35rem;
-}
-
-.circle{
-  min-width:36px;
-  height:36px;
-  border-radius:50%;
-  background:rgba(46,212,122,.15);
-  color:var(--green);
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-weight:700;
-}
-
-.pricing{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:1.5rem;
-}
-
-.price-card{
-  background:rgba(255,255,255,.03);
-  border:1px solid var(--line);
-  border-radius:28px;
-  padding:2rem;
-}
-
-.price-card.featured{
-  border:1px solid rgba(79,140,255,.5);
-  transform:scale(1.03);
-  box-shadow:0 25px 80px rgba(79,140,255,.2);
-}
-
-.price{
-  font-size:3rem;
-  font-weight:800;
-  margin:1rem 0;
-}
-
-.price small{
-  font-size:1rem;
-  color:var(--muted);
-}
-
-.price-card ul{
-  list-style:none;
-  margin:2rem 0;
-  display:flex;
-  flex-direction:column;
-  gap:1rem;
-}
-
-.price-card li{
-  color:var(--muted);
-}
-
+/* CTA */
 .cta{
-  padding:100px 0;
+padding:80px 0 120px;
 }
 
 .cta-box{
-  background:linear-gradient(180deg,#12213a,#0d1728);
-  border:1px solid rgba(255,255,255,.08);
-  border-radius:36px;
-  padding:4rem;
-  text-align:center;
+background:linear-gradient(135deg,#0f1d31,#13243c);
+border:1px solid var(--line);
+border-radius:32px;
+padding:4rem;
+text-align:center;
+position:relative;
+overflow:hidden;
+}
+
+.cta-box::before{
+content:'';
+position:absolute;
+width:600px;
+height:600px;
+background:radial-gradient(circle,rgba(90,169,255,.12),transparent 70%);
+top:-300px;
+left:50%;
+transform:translateX(-50%);
 }
 
 .cta-box h2{
-  font-size:clamp(2rem,4vw,4rem);
-  margin-bottom:1rem;
+font-size:clamp(2.5rem,6vw,4.5rem);
+letter-spacing:-0.05em;
+margin-bottom:1rem;
+position:relative;
 }
 
 .cta-box p{
-  color:var(--muted);
-  max-width:650px;
-  margin:auto;
-  line-height:1.8;
-  margin-bottom:2rem;
+max-width:700px;
+margin:auto;
+color:var(--muted);
+line-height:1.8;
+margin-bottom:2rem;
+position:relative;
 }
 
 footer{
-  padding:2rem 0;
-  border-top:1px solid var(--line);
-  color:var(--muted);
+padding:2rem 0;
+border-top:1px solid var(--line);
 }
 
 .footer-inner{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
+display:flex;
+justify-content:space-between;
+align-items:center;
+color:var(--muted);
+font-size:.92rem;
 }
 
 @media(max-width:1000px){
-  .hero-grid,
-  .split,
-  .cards,
-  .pricing{
-    grid-template-columns:1fr;
-  }
-
-  .nav-links{
-    display:none;
-  }
+.hero-grid,.feature-grid,.trust-grid{
+grid-template-columns:1fr;
 }
 
-@media(max-width:700px){
-  .hero-actions,
-  .metrics,
-  .footer-inner{
-    flex-direction:column;
-    align-items:flex-start;
-  }
-
-  .cta-box{
-    padding:2rem;
-  }
+.nav-links{
+display:none;
 }
+
+.hero{
+padding-top:130px;
+}
+
+.hero h1{
+font-size:3.2rem;
+}
+
+.cta-box{
+padding:2rem;
+}
+
+.footer-inner{
+flex-direction:column;
+gap:1rem;
+text-align:center;
+}
+}
+/* INTERACTIVE FLOATING ELEMENTS */
+.hero::before{
+content:'';
+position:absolute;
+width:500px;
+height:500px;
+background:radial-gradient(circle,rgba(90,169,255,.18),transparent 70%);
+top:-180px;
+right:-120px;
+filter:blur(20px);
+animation:floatGlow 8s ease-in-out infinite;
+}
+
+.hero::after{
+content:'';
+position:absolute;
+width:380px;
+height:380px;
+background:radial-gradient(circle,rgba(49,208,170,.12),transparent 70%);
+bottom:-180px;
+left:-100px;
+filter:blur(20px);
+animation:floatGlow 10s ease-in-out infinite reverse;
+}
+
+@keyframes floatGlow{
+0%,100%{transform:translateY(0px)}
+50%{transform:translateY(-20px)}
+}
+
+/* LIVE METRICS */
+.live-strip{
+padding:1rem 0;
+border-top:1px solid var(--line);
+border-bottom:1px solid var(--line);
+background:rgba(255,255,255,.02);
+backdrop-filter:blur(10px);
+overflow:hidden;
+}
+
+.live-track{
+display:flex;
+gap:3rem;
+white-space:nowrap;
+animation:scrollTrack 26s linear infinite;
+}
+
+.live-item{
+color:var(--muted);
+font-size:.92rem;
+}
+
+.live-item strong{
+color:var(--text);
+}
+
+@keyframes scrollTrack{
+from{transform:translateX(0)}
+to{transform:translateX(-50%)}
+}
+
+/* PLATFORM PREVIEW */
+.platform-preview{
+padding:100px 0;
+}
+
+.preview-grid{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:2rem;
+margin-top:3rem;
+}
+
+.preview-card{
+background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+border:1px solid var(--line);
+border-radius:28px;
+padding:2rem;
+position:relative;
+overflow:hidden;
+transition:.25s ease;
+}
+
+.preview-card:hover{
+transform:translateY(-5px);
+border-color:rgba(90,169,255,.25);
+}
+
+.preview-top{
+display:flex;
+align-items:center;
+justify-content:space-between;
+margin-bottom:1.5rem;
+}
+
+.preview-badge{
+padding:.4rem .7rem;
+background:rgba(49,208,170,.1);
+color:var(--green);
+border-radius:999px;
+font-size:.78rem;
+font-weight:600;
+}
+
+.mini-chart{
+height:180px;
+border-radius:18px;
+background:linear-gradient(180deg,rgba(90,169,255,.12),transparent);
+border:1px solid rgba(255,255,255,.06);
+position:relative;
+overflow:hidden;
+}
+
+.chart-line{
+position:absolute;
+left:0;
+right:0;
+bottom:30px;
+height:120px;
+background:linear-gradient(180deg,transparent,rgba(90,169,255,.18));
+clip-path:path('M0 100 Q 80 30 160 70 T 320 40 T 640 0 V 120 H0');
+}
+
+.activity-feed{
+display:flex;
+flex-direction:column;
+gap:.8rem;
+}
+
+.feed-item{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:.9rem 1rem;
+background:rgba(255,255,255,.03);
+border:1px solid var(--line);
+border-radius:14px;
+font-size:.9rem;
+}
+
+.feed-status{
+color:var(--green);
+font-size:.82rem;
+}
+
+/* SOCIAL PROOF */
+.logo-cloud{
+padding:40px 0 20px;
+opacity:.65;
+}
+
+.logo-row{
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:1rem;
+}
+
+.logo-pill{
+padding:1rem 1.3rem;
+background:rgba(255,255,255,.03);
+border:1px solid var(--line);
+border-radius:14px;
+font-weight:600;
+color:var(--muted);
+}
+
+/* HOVER GLOW */
+.feature-card::before,.trust-card::before,.preview-card::before{
+content:'';
+position:absolute;
+inset:0;
+background:radial-gradient(circle at top right,rgba(90,169,255,.10),transparent 35%);
+pointer-events:none;
+opacity:0;
+transition:.25s ease;
+}
+
+.feature-card:hover::before,.trust-card:hover::before,.preview-card:hover::before{
+opacity:1;
+}
+
+@media(max-width:1000px){
+.preview-grid{
+grid-template-columns:1fr;
+}
+
+.logo-row{
+justify-content:center;
+}
+}
+
 </style>
+
 </head>
 <body>
 
 <nav>
-  <div class="container nav-inner">
-    <div class="logo">Okrana<span>.</span></div>
-
-    <div class="nav-links">
-      <a href="#features">Features</a>
-      <a href="#security">Security</a>
-      <a href="#pricing">Pricing</a>
-      <a href="#contact">Contact</a>
-    </div>
-
-    <a href="#contact" class="nav-btn">Book Demo</a>
-  </div>
+<div class="container nav-inner">
+<a href="#" class="logo">Okrana<span>.</span></a>
+<div class="nav-links">
+<a href="#features">Features</a>
+<a href="#security">Security</a>
+<a href="#pricing">Pricing</a>
+<a href="#contact">Contact</a>
+</div>
+<div class="nav-actions">
+<a href="#" class="btn btn-outline">Live Demo</a>
+<a href="#contact" class="btn btn-primary">Book Call</a>
+</div>
+</div>
 </nav>
 
 <section class="hero">
-  <div class="glow"></div>
+<div class="container hero-grid">
+<div>
+<div class="eyebrow">HIPAA Ready · Signed BAA · Enterprise Infrastructure</div>
+<h1>Private AI for <span>regulated industries.</span></h1>
+<p>
+Okrana gives healthcare, legal, and financial teams a secure AI workspace with private infrastructure, compliance controls, audit visibility, and workflow automation — deployed in as little as 48 hours.
+</p>
 
-  <div class="container hero-grid">
-    <div>
-      <div class="badge">
-        🔒 HIPAA + SOC2 Ready Infrastructure
-      </div>
+<div class="hero-actions">
+<a href="#contact" class="btn btn-primary">Book a Demo →</a>
+<a href="#features" class="btn btn-outline">View Platform</a>
+</div>
 
-      <h1>
-        Private AI for <span>law firms</span>, clinics, and regulated teams.
-      </h1>
+<div class="hero-tags">
+<div class="hero-tag">🏥 Healthcare</div>
+<div class="hero-tag">⚖️ Legal</div>
+<div class="hero-tag">💰 Financial</div>
+<div class="hero-tag">🔒 HIPAA / SOC2 Ready</div>
+</div>
+</div>
 
-      <p>
-        Okrana gives your organization a secure AI workspace with signed BAAs, private deployments, encrypted workflows, and enterprise-grade controls — without enterprise complexity.
-      </p>
+<div class="dashboard">
+<div class="db-top">
+<div class="db-title">Okrana Workspace</div>
+<div class="db-status">● Secure Session Active</div>
+</div>
 
-      <div class="hero-actions">
-        <a href="#contact" class="btn-primary">Book a Demo</a>
-        <a href="#features" class="btn-secondary">Explore Platform</a>
-      </div>
+<div class="db-card">
+<h4>AI Assistant</h4>
+<div class="db-chat">
+<div class="msg user">Summarize this patient intake and generate SOAP notes.</div>
+<div class="msg ai">
+SOAP note generated successfully. No PHI retained after session completion. All activity logged to your encrypted audit environment.
+</div>
+</div>
+</div>
 
-      <div class="metrics">
-        <div class="metric">
-          <h3>48hr</h3>
-          <p>Average onboarding time</p>
-        </div>
-
-        <div class="metric">
-          <h3>70%</h3>
-          <p>Reduction in admin workload</p>
-        </div>
-
-        <div class="metric">
-          <h3>24/7</h3>
-          <p>Private AI availability</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="dashboard">
-      <div class="dash-top">
-        <div class="dots">
-          <div class="dot red"></div>
-          <div class="dot yellow"></div>
-          <div class="dot green"></div>
-        </div>
-
-        <span style="color:var(--muted);font-size:.9rem;">Okrana Workspace</span>
-      </div>
-
-      <div class="dash-body">
-        <div class="chat">
-          <div class="msg user">
-            Summarize this patient intake and draft a SOAP note.
-          </div>
-
-          <div class="msg ai">
-            SOAP note generated. Patient identifiers masked. Session protected under active BAA workspace.
-          </div>
-
-          <div class="msg user">
-            Draft a legal demand letter based on attached discovery.
-          </div>
-
-          <div class="msg ai">
-            Demand drafted successfully. Citations and precedent references included.
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="db-card">
+<h4>Security Overview</h4>
+<div class="db-chat">
+<div class="msg ai">✓ Signed BAA attached</div>
+<div class="msg ai">✓ Zero-retention AI routing enabled</div>
+<div class="msg ai">✓ Private deployment active</div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section class="section" id="features">
-  <div class="container">
-    <div class="section-head">
-      <span>FEATURES</span>
-      <h2>Built for trust-first organizations.</h2>
-      <p>
-        Everything about Okrana is designed around compliance, privacy, speed, and operational efficiency.
-      </p>
-    </div>
-
-    <div class="cards">
-      <div class="card">
-        <div class="card-icon">🔐</div>
-        <h3>Private AI Infrastructure</h3>
-        <p>
-          Your data never trains public models. Deploy inside your cloud or dedicated environment.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">⚡</div>
-        <h3>Workflow Automation</h3>
-        <p>
-          Automate documentation, summaries, intake processing, legal drafting, and repetitive admin tasks.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">🛡️</div>
-        <h3>Compliance Controls</h3>
-        <p>
-          Signed BAAs, audit logs, access control, encrypted sessions, and secure retention policies.
-        </p>
-      </div>
-    </div>
-  </div>
+<section class="live-strip">
+<div class="live-track">
+<div class="live-item"><strong>HIPAA-ready infrastructure</strong> · Signed BAA included</div>
+<div class="live-item"><strong>48hr onboarding</strong> · Private deployment architecture</div>
+<div class="live-item"><strong>Zero-retention routing</strong> · Enterprise visibility</div>
+<div class="live-item"><strong>Custom AI workflows</strong> · Legal · Medical · Financial</div>
+<div class="live-item"><strong>Admin controls</strong> · Secure audit logging</div>
+<div class="live-item"><strong>Healthcare AI</strong> · SOC2-ready stack</div>
+<div class="live-item"><strong>Private GPT</strong> · Internal knowledge bases</div>
+</div>
 </section>
 
-<section class="section" id="security">
-  <div class="container split">
-    <div>
-      <div class="section-head" style="text-align:left;margin-bottom:2rem;">
-        <span>SECURITY</span>
-        <h2>Enterprise-grade security without enterprise friction.</h2>
-      </div>
+<section class="platform-preview">
+<div class="container">
+<h2 class="section-title">Feels like modern SaaS software.</h2>
+<p class="section-sub">
+The best enterprise AI products feel operational, visual, and alive — not like a static landing page. Okrana is positioned closer to platforms like Vanta, Linear, Retool, and Notion AI than old healthcare software.
+</p>
 
-      <div class="list">
-        <div class="list-item">
-          <div class="circle">✓</div>
-          <div>
-            <strong>Signed BAA on every plan</strong>
-            <p style="color:var(--muted);line-height:1.7;">No upsells required for compliance coverage.</p>
-          </div>
-        </div>
+<div class="preview-grid">
+<div class="preview-card">
+<div class="preview-top">
+<h3>Workspace Analytics</h3>
+<div class="preview-badge">Live</div>
+</div>
+<div class="mini-chart">
+<div class="chart-line"></div>
+</div>
+<p style="margin-top:1rem;color:var(--muted);line-height:1.8">
+Monitor AI usage, automate workflows, review compliance logs, and track operational savings from one unified dashboard.
+</p>
+</div>
 
-        <div class="list-item">
-          <div class="circle">✓</div>
-          <div>
-            <strong>Encrypted sessions & storage</strong>
-            <p style="color:var(--muted);line-height:1.7;">Protected data pipelines with zero-training guarantees.</p>
-          </div>
-        </div>
-
-        <div class="list-item">
-          <div class="circle">✓</div>
-          <div>
-            <strong>Role-based permissions</strong>
-            <p style="color:var(--muted);line-height:1.7;">Control exactly who can access sensitive workflows.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="panel">
-      <div style="display:flex;justify-content:space-between;margin-bottom:1.5rem;">
-        <div>
-          <div style="font-size:.9rem;color:var(--muted);margin-bottom:.4rem;">Security Status</div>
-          <div style="font-size:2rem;font-weight:800;">Protected</div>
-        </div>
-
-        <div style="text-align:right;">
-          <div style="color:var(--green);font-weight:700;">All Systems Secure</div>
-          <div style="color:var(--muted);font-size:.9rem;">Last verified 2 mins ago</div>
-        </div>
-      </div>
-
-      <div style="display:grid;gap:1rem;">
-        <div style="background:rgba(255,255,255,.03);padding:1rem;border-radius:18px;border:1px solid var(--line);">
-          HIPAA Compliance Monitoring
-        </div>
-
-        <div style="background:rgba(255,255,255,.03);padding:1rem;border-radius:18px;border:1px solid var(--line);">
-          Secure Access Policies Enabled
-        </div>
-
-        <div style="background:rgba(255,255,255,.03);padding:1rem;border-radius:18px;border:1px solid var(--line);">
-          Zero Public Model Training
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="preview-card">
+<div class="preview-top">
+<h3>Realtime Activity</h3>
+<div class="preview-badge">Encrypted</div>
+</div>
+<div class="activity-feed">
+<div class="feed-item"><span>SOAP notes generated</span><span class="feed-status">Secure ✓</span></div>
+<div class="feed-item"><span>Legal discovery summarized</span><span class="feed-status">Completed</span></div>
+<div class="feed-item"><span>Audit export created</span><span class="feed-status">Ready</span></div>
+<div class="feed-item"><span>Knowledge base synced</span><span class="feed-status">Updated</span></div>
+</div>
+</div>
+</div>
+</div>
 </section>
 
-<section class="section" id="pricing">
-  <div class="container">
-    <div class="section-head">
-      <span>PRICING</span>
-      <h2>Simple pricing for growing firms.</h2>
-      <p>
-        Transparent monthly plans designed for practices and professional teams.
-      </p>
-    </div>
+<section class="logo-cloud">
+<div class="container">
+<div class="logo-row">
+<div class="logo-pill">Inspired by Vanta</div>
+<div class="logo-pill">Linear-style UX</div>
+<div class="logo-pill">Retool dashboards</div>
+<div class="logo-pill">Notion AI simplicity</div>
+<div class="logo-pill">Stripe-level polish</div>
+</div>
+</div>
+</section>
 
-    <div class="pricing">
-      <div class="price-card">
-        <h3>Starter</h3>
-        <div class="price">$750 <small>/mo</small></div>
+<section class="trust" id="security">
+<div class="container">
+<h2 class="section-title">Built for compliance-first teams.</h2>
+<p class="section-sub">
+Most AI products were built for consumers. Okrana was built for organizations handling sensitive records, privileged communications, financial data, and protected health information.
+</p>
 
-        <ul>
-          <li>✓ Private AI Workspace</li>
-          <li>✓ Signed BAA</li>
-          <li>✓ Up to 3 users</li>
-          <li>✓ Basic workflows</li>
-        </ul>
+<div class="trust-grid">
+<div class="trust-card">
+<h3>48hr</h3>
+<p>Average onboarding time from signed agreement to production deployment.</p>
+</div>
 
-        <a href="#contact" class="btn-secondary" style="display:block;text-align:center;">Get Started</a>
-      </div>
+<div class="trust-card">
+<h3>0</h3>
+<p>Customer data retained in AI sessions when zero-retention mode is enabled.</p>
+</div>
 
-      <div class="price-card featured">
-        <h3>Growth</h3>
-        <div class="price">$1,500 <small>/mo</small></div>
+<div class="trust-card">
+<h3>24/7</h3>
+<p>Infrastructure monitoring, security oversight, and direct support access.</p>
+</div>
 
-        <ul>
-          <li>✓ Advanced automation</li>
-          <li>✓ Priority support</li>
-          <li>✓ Multi-user collaboration</li>
-          <li>✓ Custom workflow setup</li>
-        </ul>
+<div class="trust-card">
+<h3>100%</h3>
+<p>Private deployment architecture with signed BAA available on every plan.</p>
+</div>
+</div>
+</div>
+</section>
 
-        <a href="#contact" class="btn-primary" style="display:block;text-align:center;">Book Demo</a>
-      </div>
+<section class="features" id="features">
+<div class="container">
+<h2 class="section-title">Enterprise AI infrastructure, not a chatbot.</h2>
+<p class="section-sub">
+Deploy secure AI across your organization with centralized governance, workflow automation, encrypted storage, and configurable access policies.
+</p>
 
-      <div class="price-card">
-        <h3>Enterprise</h3>
-        <div class="price">Custom</div>
+<div class="feature-grid">
+<div class="feature-card">
+<div class="feature-icon">🔒</div>
+<h4>Private AI Environment</h4>
+<p>
+Dedicated AI infrastructure with encrypted storage, audit visibility, and configurable retention controls.
+</p>
+</div>
 
-        <ul>
-          <li>✓ Dedicated infrastructure</li>
-          <li>✓ Unlimited users</li>
-          <li>✓ API integrations</li>
-          <li>✓ SLA + onboarding</li>
-        </ul>
+<div class="feature-card">
+<div class="feature-icon">⚡</div>
+<h4>Workflow Automation</h4>
+<p>
+Generate SOAP notes, summarize cases, draft letters, analyze intake forms, and automate repetitive workflows.
+</p>
+</div>
 
-        <a href="#contact" class="btn-secondary" style="display:block;text-align:center;">Contact Sales</a>
-      </div>
-    </div>
-  </div>
+<div class="feature-card">
+<div class="feature-icon">📊</div>
+<h4>Admin Visibility</h4>
+<p>
+Track usage, manage permissions, control integrations, and maintain compliance oversight from one dashboard.
+</p>
+</div>
+
+<div class="feature-card">
+<div class="feature-icon">🧠</div>
+<h4>Custom Knowledge Bases</h4>
+<p>
+Train AI on your templates, internal documents, procedures, and workflows without exposing data publicly.
+</p>
+</div>
+
+<div class="feature-card">
+<div class="feature-icon">☁️</div>
+<h4>Cloud or On-Prem</h4>
+<p>
+Deploy in your preferred infrastructure environment with flexible architecture support.
+</p>
+</div>
+
+<div class="feature-card">
+<div class="feature-icon">📞</div>
+<h4>White-Glove Support</h4>
+<p>
+Direct access to technical onboarding and implementation support throughout deployment.
+</p>
+</div>
+</div>
+</div>
 </section>
 
 <section class="cta" id="contact">
-  <div class="container">
-    <div class="cta-box">
-      <h2>Deploy compliant AI in days, not months.</h2>
-
-      <p>
-        Book a private walkthrough and see how Okrana can automate documentation, reduce admin work, and protect sensitive data.
-      </p>
-
-      <a href="mailto:hello@okrana.com" class="btn-primary">
-        hello@okrana.com
-      </a>
-    </div>
-  </div>
+<div class="container">
+<div class="cta-box">
+<h2>See Okrana live.</h2>
+<p>
+We’ll show you exactly how firms are deploying private AI securely across healthcare, legal, and financial workflows.
+</p>
+<a href="mailto:hello@okrana.com" class="btn btn-primary">Schedule a Demo</a>
+</div>
+</div>
 </section>
 
 <footer>
-  <div class="container footer-inner">
-    <div>© 2026 Okrana. All rights reserved.</div>
-
-    <div style="display:flex;gap:1.5rem;">
-      <a href="#">Privacy</a>
-      <a href="#">Security</a>
-      <a href="#">Terms</a>
-    </div>
-  </div>
+<div class="container footer-inner">
+<div>© 2026 Okrana LLC</div>
+<div>Private AI Infrastructure for Regulated Organizations</div>
+</div>
 </footer>
 
 </body>
 </html>
-```
