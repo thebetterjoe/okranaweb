@@ -705,7 +705,7 @@ function calcRoi(){
 
 var SUPABASE_URL='https://ankrsrdfjcxxmcezqsxy.supabase.co';
 var SUPABASE_ANON_KEY='sb_publishable_UXqhiHhT8_kvpJMtNkXOlg_67utyq2f';
-var SUBMISSIONS_TABLE='submissions';
+var SUBMISSIONS_TABLE='submissions';  
 
 async function submitToSupabase(row){
   try{
@@ -713,7 +713,8 @@ async function submitToSupabase(row){
       method:'POST',
       headers:{
         'Content-Type':'application/json',
-        'x-api-key': SUPABASE_ANON_KEY,
+        'apikey': SUPABASE_ANON_KEY,
+        'Authorization': 'Bearer '+SUPABASE_ANON_KEY,
         'Prefer':'return=representation'
       },
       body:JSON.stringify(row)
