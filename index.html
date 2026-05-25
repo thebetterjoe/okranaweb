@@ -1079,7 +1079,7 @@ async function postForm(d){
   try{const r=await fetch('https://formspree.io/f/'+FID,{method:'POST',headers:{'Content-Type':'application/json','Accept':'application/json'},body:JSON.stringify(d)});return r.ok;}catch(e){return false;}
 }
 
-<script>
+</script>
 async function sfSubmit() {
   console.log("submit clicked");
 
@@ -1118,6 +1118,8 @@ async function sfSubmit() {
     ) {
 
       console.log("sending to supabase...");
+      console.log("URL:", 'https://ankrsrdfjcxxmcezqsxy.supabase.co/rest/v1/submissions');
+      console.log("KEY:", sb_publishable_UXqhiHhT8_kvpJMtNkXOlg_67utyq2f);
 
       const res = await fetch(
         'https://ankrsrdfjcxxmcezqsxy.supabase.co/rest/v1/submissions',
