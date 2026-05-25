@@ -42,6 +42,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:cen
 .logo span{color:var(--gold)}
 .nav-cta{font-family:var(--f-body);font-size:.83rem;font-weight:500;background:var(--ink);color:var(--paper);padding:.5rem 1.35rem;border-radius:4px;text-decoration:none;transition:transform .15s;border:none;cursor:pointer;display:inline-block;}
 .nav-cta:hover{transform:translateY(-1px)}
+.nav-actions{display:flex;align-items:center;gap:1rem}
+.nav-signin{background:transparent;color:var(--ink);border:1px solid var(--paper-3)}
+.nav-signin:hover{background:var(--paper-2);transform:translateY(0)}
 
 /* HAMBURGER */
 .hamburger{display:flex;flex-direction:column;gap:.35rem;background:none;border:none;cursor:pointer;padding:.5rem;margin-right:.5rem}
@@ -316,10 +319,12 @@ footer{background:var(--navy);padding:1.75rem 3rem;display:flex;justify-content:
     <button class="hamburger" id="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </button>
-    <a href="#" class="logo">Okrana<span>.</span></a>
+    <a href="/" class="logo">Okrana<span>.</span></a>
   </div>
-  <a href="signin.html" class="nav-cta" style="margin-right:1rem;background:var(--paper-2);color:var(--ink);border:1px solid var(--paper-3);">Sign In</a>
-  <a href="#signup" class="nav-cta">Book a free call</a>
+  <div class="nav-actions">
+    <a href="signin.html" class="nav-cta nav-signin">Sign In</a>
+    <a href="#signup" class="nav-cta">Book a free call</a>
+  </div>
 </nav>
 
 <div class="dropdown-menu" id="dropdownMenu">
